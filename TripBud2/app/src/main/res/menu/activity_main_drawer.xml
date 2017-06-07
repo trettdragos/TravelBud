@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_manage_trip"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Configure Current Trip" />
+        <item
+            android:id="@+id/nav_manage_account"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Configure Account" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_meting_point"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Meting point" />
+\            <item
+                android:id="@+id/nav_announcements"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Announcements" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,102 @@
+package com.example.dragostrett.tripbud;
+
+/**
+ * Created by DragosTrett on 23.05.2017.
+ */
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.widget.Toast;
+
+import com.mysql.jdbc.PreparedStatement;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+
+public class loginBG extends AsyncTask<String, Integer, String> {
+    Context context;
+    public loginBG(Context context){
+        this.context=context;
+    }
+    @Override
+    protected String doInBackground(String... params) {
+        String user=params[0];
+        String pass=params[1];
+        Connection con=null;
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con= (Connection) DriverManager.getConnection("jdbc:mysql://35.187.169.134:3306/android", "user", "password");
+            ps= (PreparedStatement) con.prepareStatement("SELECT * FROM table1 WHERE username=? AND password=?");
+            ps.setString(1, user);
+            ps.setString(2, pass);
+            rs=ps.executeQuery();
+            if(!rs.isBeforeFirst()){
+                UserInfo.setLogedIn(false);
+            }
+            else{
+                UserInfo.setLogedIn(true);
+                while(rs.next()){
+                    UserInfo.setUsername(rs.getString("username"));
+                    UserInfo.setEmail(rs.getString("email"));
+                    UserInfo.setPassword(rs.getString("password"));
+                    UserInfo.setLatitudine(rs.getString("latitudine"));
+                    UserInfo.setLongitudine(rs.getString("longitudine"));
+                    UserInfo.setId(rs.getString("id"));
+                    UserInfo.setTrip(rs.getString("trip"));
+                    UserInfo.setType(rs.getString("type"));
+                    UserInfo.setLocation(true);
+                }
+            }
+            if(UserInfo.getTrip().equals("")){
+                TripInfo.setMeet("");
+                TripInfo.setInATrip(false);
+            }
+            else{
+                ps= (PreparedStatement) con.prepareStatement("SELECT * FROM trips WHERE name='"+UserInfo.getTrip()+"'");
+                rs=ps.executeQuery();
+                TripInfo.setInATrip(true);
+                while(rs.next()){
+                    TripInfo.setIdTrip(rs.getString("id"));
+                    TripInfo.setNameTrip(rs.getString("name"));
+                    TripInfo.setPlace(rs.getString("place"));
+                    TripInfo.setOrganizator(rs.getString("organizator"));
+                    TripInfo.setMeet(rs.getString("meet"));
+                    TripInfo.setNumber_users(rs.getString("number_users"));
+                }
+            }
+            if(!TripInfo.getMeet().equals("")){
+                ps= (PreparedStatement) con.prepareStatement("SELECT * FROM meet WHERE  moment='"+TripInfo.getMeet()+"'");
+                rs=ps.executeQuery();
+                while(rs.next()){
+                    MeetInfo.setLongitudine(rs.getString("longitudine"));
+                    MeetInfo.setLatitudine(rs.getString("latitudine"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "done";
+    }
+
+    @Override
+    protected void onPostExecute(String result){
+        if(UserInfo.isLogedIn()){
+            UserInfo.setLogedIn(true);
+            MainActivity.k=true;
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
+        }
+        else{
+            Toast.makeText(context, "Incorrect username or password",
+                    Toast.LENGTH_SHORT).show();
+            UserInfo.setLogedIn(false);
+        }
+
+
+    }
+
+}
