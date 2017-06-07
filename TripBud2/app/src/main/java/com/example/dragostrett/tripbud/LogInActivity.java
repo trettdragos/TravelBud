@@ -18,6 +18,7 @@ public class LogInActivity extends AppCompatActivity {
     EditText password;
     int mNotificationId = 001;
     static  Context context;
+    public static String pass="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class LogInActivity extends AppCompatActivity {
     public void loginUser(View view) throws InterruptedException {
         if(isOnline()){
             String ps=password.getText().toString(), un=username.getText().toString();
+            pass=ps;
             UserInfo.setLogedIn(false);
             new loginBG(this).execute(un, ps);
         }

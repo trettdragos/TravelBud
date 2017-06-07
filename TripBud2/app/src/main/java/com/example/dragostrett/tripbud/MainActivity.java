@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,10 +37,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     public static GoogleMap mMap;
-    GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
+    public static GoogleApiClient mGoogleApiClient;
+    public static Location mLastLocation;
     public static Marker user, meet;
     public static Context context;
     Boolean isOn = true;
@@ -78,6 +82,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        timer.cancel();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -97,38 +102,43 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             //exit the app
+            timer.cancel();
             this.finishAndRemoveTask();
             return true;
         } else if (id == R.id.action_refresh) {
             //refresh the map
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return true;
-            }
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if(mLastLocation!=null){
-                user.remove();
-                Toast.makeText(this, "Getting Location",
-                        Toast.LENGTH_SHORT).show();
-                UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
-                UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
-                new UpdateLocationBG().execute();
-            }
-            Toast.makeText(this, "Refreshing",
-                    Toast.LENGTH_SHORT).show();
-            mMap.clear();
-            LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
-            user = mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-            if(TripInfo.isInATrip()){
+            refresh();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    public static void refresh(){
+        //if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        //    return;
+        //}
+        //mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if(mLastLocation!=null){
+            user.remove();
+            //Toast.makeText(context, "Getting Location",
+              //      Toast.LENGTH_SHORT).show();
+            UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
+            UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
+            new UpdateLocationBG().execute();
+        }
+        //Toast.makeText(context, "Refreshing",
+        //        Toast.LENGTH_SHORT).show();
+        mMap.clear();
+        LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
+        user = mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        if(TripInfo.isInATrip()){
             if (!TripInfo.getMeet().equals("")) {
                 LatLng sydne = new LatLng(Double.parseDouble(MeetInfo.getLatitudine().toString()), Double.parseDouble(MeetInfo.getLongitudine().toString()));
                 meet = mMap.addMarker(new MarkerOptions().position(sydne).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
             }
             if(!UserInfo.getTrip().equals(""))
-            new GetAllUsersLocBG(this, mMap).execute();}
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+                new GetAllUsersLocBG(context, mMap).execute();}
+        //new loginBG(context).execute(UserInfo.getUsername(), LogInActivity.pass);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -154,7 +164,8 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_announcements) {
             //change activity to announcements screen
-            if(TripInfo.isInATrip()){                //check for trip existance
+            if(TripInfo.isInATrip()){
+                //check for trip existance
                 Intent intent = new Intent(this, AnnouncementsActivity.class);
                 this.startActivity(intent);
             }
@@ -163,6 +174,7 @@ public class MainActivity extends AppCompatActivity
                         Toast.LENGTH_SHORT).show();
             }
         }
+        timer.cancel();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -235,7 +247,28 @@ public class MainActivity extends AppCompatActivity
         } else {Toast.makeText(this, "Location Failure",
                 Toast.LENGTH_SHORT).show();
                 UserInfo.setLocation(false);}
+        LocationRequest mLocationRequest = new LocationRequest();
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+        timer.start();
     }
+
+    public static CountDownTimer timer= new CountDownTimer(10000, 20) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
+        @Override
+        public void onFinish() {
+            try{
+                new RefreshTest(context).execute();
+            }catch(Exception e){
+                Log.e("Error", "Error: " + e.toString());
+            }
+        }
+    };
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -265,5 +298,12 @@ public class MainActivity extends AppCompatActivity
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(this, "Location Failure",
                 Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Toast.makeText(this, "Location changed",
+                Toast.LENGTH_SHORT).show();
+        mLastLocation=location;
     }
 }
