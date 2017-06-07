@@ -305,5 +305,9 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, "Location changed",
                 Toast.LENGTH_SHORT).show();
         mLastLocation=location;
+        UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
+        UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
+        new UpdateLocationBG().execute();
+        refresh();
     }
 }
