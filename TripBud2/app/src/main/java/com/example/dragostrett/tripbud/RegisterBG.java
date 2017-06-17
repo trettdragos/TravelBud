@@ -22,6 +22,7 @@ public class RegisterBG extends AsyncTask<String, Integer, String> {
         String username=params[0];
         String password=params[1];
         String email=params[2];
+        LogInActivity.pass=password;
         Connection con=null;
         PreparedStatement ps=null;
         try {

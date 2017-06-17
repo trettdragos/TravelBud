@@ -107,7 +107,31 @@ public class MainActivity extends AppCompatActivity
             return true;
         } else if (id == R.id.action_refresh) {
             //refresh the map
-            refresh();
+            if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return true;
+            }
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if(mLastLocation!=null){
+                user.remove();
+                Toast.makeText(context, "Getting Location",
+                      Toast.LENGTH_SHORT).show();
+                UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
+                UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
+                new UpdateLocationBG().execute();
+            }
+            Toast.makeText(context, "Refreshing",
+                    Toast.LENGTH_SHORT).show();
+            mMap.clear();
+            LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
+            user = mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+            if(TripInfo.isInATrip()){
+                if (!TripInfo.getMeet().equals("")) {
+                    LatLng sydne = new LatLng(Double.parseDouble(MeetInfo.getLatitudine().toString()), Double.parseDouble(MeetInfo.getLongitudine().toString()));
+                    meet = mMap.addMarker(new MarkerOptions().position(sydne).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                }
+                if(!UserInfo.getTrip().equals(""))
+                    new GetAllUsersLocBG(context, mMap).execute();}
+            new loginBG(context).execute(UserInfo.getUsername(), LogInActivity.pass);
             return true;
         }
 
