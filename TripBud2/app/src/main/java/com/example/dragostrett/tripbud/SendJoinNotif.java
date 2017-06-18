@@ -2,6 +2,7 @@ package com.example.dragostrett.tripbud;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -40,6 +41,6 @@ public class SendJoinNotif extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String result){
-
+        Toast.makeText(context, "A reques was sent to the user to join", Toast.LENGTH_SHORT).show();
     }
 }
