@@ -25,7 +25,7 @@ public class UpdateUserInfo extends AsyncTask<String, Integer, String> {
         PreparedStatement ps=null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con= (Connection) DriverManager.getConnection("jdbc:mysql://35.187.169.134:3306/android", "user", "password");
+            con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
             ps= (PreparedStatement) con.prepareStatement("UPDATE table1 SET username=?, password=?, email=? WHERE username=?");
             ps.setString(1, username);
             ps.setString(2, password);

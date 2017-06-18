@@ -18,7 +18,7 @@ public class CreateAnnouncement extends AsyncTask<String, Integer, String> {
         PreparedStatement ps=null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con= (Connection) DriverManager.getConnection("jdbc:mysql://35.187.169.134:3306/android", "user", "password");
+            con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
             ps= (PreparedStatement) con.prepareStatement("CREATE TABLE `"+UserInfo.getTrip()+"` (" +
                     "                      `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY," +
                     "                      `time` VARCHAR(50) NOT NULL," +

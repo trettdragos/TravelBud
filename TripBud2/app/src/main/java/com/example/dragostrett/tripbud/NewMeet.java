@@ -21,7 +21,7 @@ public class NewMeet extends AsyncTask<String, Integer, String> {
         PreparedStatement ps=null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con= (Connection) DriverManager.getConnection("jdbc:mysql://35.187.169.134:3306/android", "user", "password");
+            con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
             ps= (PreparedStatement) con.prepareStatement("INSERT INTO meet (moment, latitudine, longitudine) VALUES (?,?,?)");
             ps.setString(1, TripInfo.getMeet());
             ps.setString(2, MeetInfo.getLatitudine());

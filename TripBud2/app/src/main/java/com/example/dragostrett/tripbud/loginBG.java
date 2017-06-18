@@ -29,7 +29,7 @@ public class loginBG extends AsyncTask<String, Integer, String> {
         ResultSet rs=null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con= (Connection) DriverManager.getConnection("jdbc:mysql://35.187.169.134:3306/android", "user", "password");
+            con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
             ps= (PreparedStatement) con.prepareStatement("SELECT * FROM table1 WHERE username=? AND password=?");
             ps.setString(1, user);
             ps.setString(2, pass);

@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity
         LocationRequest mLocationRequest = new LocationRequest();
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
-        timer.start();
+        //timer.start();
     }
 
     public static CountDownTimer timer= new CountDownTimer(10000, 20) {
