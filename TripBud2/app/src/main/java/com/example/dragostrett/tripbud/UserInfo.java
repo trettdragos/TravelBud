@@ -16,6 +16,25 @@ public class UserInfo {
     public static String latitudine;
     public static boolean logedIn;
     public static boolean location;
+    public static String notification="";
+    public static boolean visible=false;
+
+    public static boolean isVisible() {
+        return visible;
+    }
+
+    public static void setVisible(boolean visible) {
+        UserInfo.visible = visible;
+    }
+
+    public static String getNotification() {
+        return notification;
+    }
+
+    public static void setNotification(String notification) {
+        UserInfo.notification = notification;
+    }
+
 
     public static boolean isLocation() {
         return location;

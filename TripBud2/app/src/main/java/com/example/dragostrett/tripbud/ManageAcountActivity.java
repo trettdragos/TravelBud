@@ -5,12 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class ManageAcountActivity extends AppCompatActivity {
 
     EditText username, email, pass1, pass2;
+    CheckBox vis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +33,14 @@ public class ManageAcountActivity extends AppCompatActivity {
         email.setText(UserInfo.getEmail());
     }
     public void saveChanges(View view){
+        vis=(CheckBox)findViewById(R.id.checkBoxVisible);
+        String aux="0";
+        if(vis.isChecked())
+            aux="1";
         if(pass1.getText().toString().equals(pass2.getText().toString()) && !username.getText().toString().equals("") && !email.getText().toString().equals("")){
             if(!pass1.getText().toString().equals(""))
-            new UpdateUserInfo(this).execute(username.getText().toString(), pass1.getText().toString(), email.getText().toString());
-            else new UpdateUserInfo(this).execute(username.getText().toString(), UserInfo.getPassword(), email.getText().toString());
+            new UpdateUserInfo(this).execute(username.getText().toString(), pass1.getText().toString(), email.getText().toString(),aux);
+            else new UpdateUserInfo(this).execute(username.getText().toString(), UserInfo.getPassword(), email.getText().toString(), aux);
 
         }
         else{

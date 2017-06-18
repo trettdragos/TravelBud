@@ -30,7 +30,7 @@ public class TripActivity extends AppCompatActivity {
         }
         userName = (EditText)findViewById(R.id.editText_deleteUser);
         deleteUser = (Button)findViewById(R.id.button_deleteUser);
-        if(TripInfo.isInATrip()){//check if user is in a trip and display information acordingly
+        if(TripInfo.isInATrip()){//check if user is in a trip and display information acordingly\
             trip=(TextView)findViewById(R.id.textView_trip);
             trip.setText("Name: "+TripInfo.getNameTrip());
             place=(TextView)findViewById(R.id.textView_place);

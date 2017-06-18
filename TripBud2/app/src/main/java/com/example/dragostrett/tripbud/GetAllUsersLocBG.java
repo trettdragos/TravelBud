@@ -22,6 +22,7 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
     GoogleMap map;
     LinkedList<LatLng> a = new LinkedList<>();
     LinkedList<String> name = new LinkedList<>();
+    LinkedList<Boolean> visibility = new LinkedList<>();
     public GetAllUsersLocBG(Context context, GoogleMap show){
         this.context=context;this.map = show;
     }
@@ -41,6 +42,10 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
                 LatLng n= new LatLng(Double.parseDouble(rs.getString("latitudine")), Double.parseDouble(rs.getString("longitudine")));
                 a.push(n);
                 name.push(rs.getString("username"));
+                String aux=rs.getString("visible");
+                if(aux.equals("1"))
+                    visibility.push(true);
+                else visibility.push(false);
             }while (rs.next());
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,7 +56,7 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result){
         for(int j=0; j<a.size(); j++){
-            if(!name.get(j).equals(UserInfo.getUsername()) && !name.get(j).equals(""))
+            if(!name.get(j).equals(UserInfo.getUsername()) && !name.get(j).equals("") && visibility.get(j))
             map.addMarker(new MarkerOptions().position(a.get(j)).title(name.get(j)));
         }
     }

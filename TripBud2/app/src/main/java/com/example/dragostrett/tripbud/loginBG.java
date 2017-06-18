@@ -48,6 +48,11 @@ public class loginBG extends AsyncTask<String, Integer, String> {
                     UserInfo.setId(rs.getString("id"));
                     UserInfo.setTrip(rs.getString("trip"));
                     UserInfo.setType(rs.getString("type"));
+                    String aux=rs.getString("visible");
+                    if(aux.equals("1"))
+                        UserInfo.setVisible(true);
+                    else UserInfo.setVisible(false);
+                    UserInfo.setNotification(rs.getString("notificare"));
                     UserInfo.setLocation(true);
                 }
             }

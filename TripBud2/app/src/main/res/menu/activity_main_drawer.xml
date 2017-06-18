@@ -10,6 +10,10 @@
             android:id="@+id/nav_manage_account"
             android:icon="@drawable/ic_menu_manage"
             android:title="Configure Account" />
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Notifications" />
     </group>
 
     <item android:title="Communicate">
@@ -22,6 +26,10 @@
                 android:id="@+id/nav_announcements"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Announcements" />
+            <item
+                android:id="@+id/nav_chat"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Group Chat" />
         </menu>
     </item>
 

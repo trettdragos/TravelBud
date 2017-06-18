@@ -28,7 +28,7 @@ public class RegisterBG extends AsyncTask<String, Integer, String> {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
-            ps= (PreparedStatement) con.prepareStatement("INSERT INTO table1 (username, password, email, trip, type, longitudine, latitudine) VALUES (?,?,?, ?, ?, '0', '0')");
+            ps= (PreparedStatement) con.prepareStatement("INSERT INTO table1 (username, password, email, trip, type, longitudine, latitudine, notificare, visible) VALUES (?,?,?, ?, ?, '0', '0', ?, ?)");
             ps.setString(1, username);
             ps.setString(2, password);
             ps.setString(3, email);
@@ -36,6 +36,8 @@ public class RegisterBG extends AsyncTask<String, Integer, String> {
             if(RegisterActivity.admin)
             ps.setString(5, "1");
             else ps.setString(5, "0");
+            ps.setString(6, "0");
+            ps.setString(7, "0");
             ps.executeUpdate();
             UserInfo.setLogedIn(true);
             UserInfo.setUsername(username);

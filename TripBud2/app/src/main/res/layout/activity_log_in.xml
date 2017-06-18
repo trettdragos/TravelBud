@@ -19,15 +19,6 @@
         android:layout_alignBottom="@+id/editText_name"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:text="Register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/button_reister"
-        android:onClick="openRegisterAct" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,15 +37,6 @@
         android:layout_alignBottom="@+id/editText_password"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:text="LogIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:onClick="loginUser" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,4 +46,23 @@
         android:hint="Name"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="LogIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:onClick="loginUser"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_reister"
+        android:onClick="openRegisterAct"
+        android:layout_alignBaseline="@+id/button"
+        android:layout_alignBottom="@+id/button"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

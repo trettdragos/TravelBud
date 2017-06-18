@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -37,7 +36,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     public static GoogleMap mMap;
     public static GoogleApiClient mGoogleApiClient;
     public static Location mLastLocation;
@@ -48,6 +47,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Toast.makeText(this, String.valueOf(UserInfo.isVisible())+ " "+UserInfo.getNotification(),
+                Toast.LENGTH_SHORT).show();
         //ending previous activity
         context=this;
         if (UserInfo.isLogedIn()) {
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        timer.cancel();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -102,68 +102,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             //exit the app
-            timer.cancel();
             this.finishAndRemoveTask();
             return true;
         } else if (id == R.id.action_refresh) {
             //refresh the map
-            if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return true;
-            }
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if(mLastLocation!=null){
-                user.remove();
-                Toast.makeText(context, "Getting Location",
-                      Toast.LENGTH_SHORT).show();
-                UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
-                UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
-                new UpdateLocationBG().execute();
-            }
-            Toast.makeText(context, "Refreshing",
-                    Toast.LENGTH_SHORT).show();
-            mMap.clear();
-            LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
-            user = mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-            if(TripInfo.isInATrip()){
-                if (!TripInfo.getMeet().equals("")) {
-                    LatLng sydne = new LatLng(Double.parseDouble(MeetInfo.getLatitudine().toString()), Double.parseDouble(MeetInfo.getLongitudine().toString()));
-                    meet = mMap.addMarker(new MarkerOptions().position(sydne).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                }
-                if(!UserInfo.getTrip().equals(""))
-                    new GetAllUsersLocBG(context, mMap).execute();}
-            new loginBG(context).execute(UserInfo.getUsername(), LogInActivity.pass);
+            //refresh();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-    public static void refresh(){
-        //if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        //    return;
-        //}
-        //mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if(mLastLocation!=null){
-            user.remove();
-            //Toast.makeText(context, "Getting Location",
-              //      Toast.LENGTH_SHORT).show();
-            UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
-            UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
-            new UpdateLocationBG().execute();
-        }
-        //Toast.makeText(context, "Refreshing",
-        //        Toast.LENGTH_SHORT).show();
-        mMap.clear();
-        LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
-        user = mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        if(TripInfo.isInATrip()){
-            if (!TripInfo.getMeet().equals("")) {
-                LatLng sydne = new LatLng(Double.parseDouble(MeetInfo.getLatitudine().toString()), Double.parseDouble(MeetInfo.getLongitudine().toString()));
-                meet = mMap.addMarker(new MarkerOptions().position(sydne).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-            }
-            if(!UserInfo.getTrip().equals(""))
-                new GetAllUsersLocBG(context, mMap).execute();}
-        //new loginBG(context).execute(UserInfo.getUsername(), LogInActivity.pass);
-    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -198,7 +147,6 @@ public class MainActivity extends AppCompatActivity
                         Toast.LENGTH_SHORT).show();
             }
         }
-        timer.cancel();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -272,26 +220,24 @@ public class MainActivity extends AppCompatActivity
                 Toast.LENGTH_SHORT).show();
                 UserInfo.setLocation(false);}
         LocationRequest mLocationRequest = new LocationRequest();
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, this);
-        //timer.start();
+        //LocationServices.FusedLocationApi.requestLocationUpdates(
+          //      mGoogleApiClient, mLocationRequest, this);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Toast.makeText(context, "Location changed",
+                        Toast.LENGTH_SHORT).show();
+                mLastLocation=location;
+                UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
+                UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
+                Log.e("location", String.valueOf(mLastLocation.getLatitude())+" "+ String.valueOf(mLastLocation.getLongitude()));
+                new UpdateLocationBG().execute();
+
+                //refresh();
+            }
+        });
     }
 
-    public static CountDownTimer timer= new CountDownTimer(10000, 20) {
-        @Override
-        public void onTick(long millisUntilFinished) {
-
-        }
-
-        @Override
-        public void onFinish() {
-            try{
-                new RefreshTest(context).execute();
-            }catch(Exception e){
-                Log.e("Error", "Error: " + e.toString());
-            }
-        }
-    };
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -324,7 +270,7 @@ public class MainActivity extends AppCompatActivity
                 Toast.LENGTH_SHORT).show();
     }
 
-    @Override
+    /*@Override
     public void onLocationChanged(Location location) {
         Toast.makeText(this, "Location changed",
                 Toast.LENGTH_SHORT).show();
@@ -333,5 +279,32 @@ public class MainActivity extends AppCompatActivity
         UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
         new UpdateLocationBG().execute();
         refresh();
+    }*/
+    public static void refresh(){
+        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if(mLastLocation!=null){
+            user.remove();
+            //Toast.makeText(context, "Getting Location",
+            //      Toast.LENGTH_SHORT).show();
+            UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
+            UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
+            new UpdateLocationBG().execute();
+        }
+        //Toast.makeText(context, "Refreshing",
+        //        Toast.LENGTH_SHORT).show();
+        mMap.clear();
+        LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
+        user = mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        if(TripInfo.isInATrip()){
+            if (!TripInfo.getMeet().equals("")) {
+                LatLng sydne = new LatLng(Double.parseDouble(MeetInfo.getLatitudine().toString()), Double.parseDouble(MeetInfo.getLongitudine().toString()));
+                meet = mMap.addMarker(new MarkerOptions().position(sydne).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+            }
+            if(!UserInfo.getTrip().equals(""))
+                new GetAllUsersLocBG(context, mMap).execute();}
+        new loginBG(context).execute(UserInfo.getUsername(), LogInActivity.pass);
     }
 }

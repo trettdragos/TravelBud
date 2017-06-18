@@ -98,4 +98,14 @@
         android:layout_below="@+id/editText_email"
         android:layout_alignStart="@+id/editText_email" />
 
+    <CheckBox
+        android:text="Visible on map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBoxVisible"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/editText_pass2"
+        android:layout_toEndOf="@+id/textView10"
+        android:checked="true" />
+
 </RelativeLayout>
