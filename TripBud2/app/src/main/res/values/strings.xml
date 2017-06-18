@@ -103,4 +103,5 @@
     <string name="title_activity_meeting">MeetingActivity</string>
     <string name="title_activity_choose_location">ChooseLocationActivity</string>
     <string name="title_activity_announcements">AnnouncementsActivity</string>
+    <string name="title_activity_notification">NotificationActivity</string>
 </resources>

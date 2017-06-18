@@ -82,7 +82,8 @@ public class TripActivity extends AppCompatActivity {
     public void addUser(View view){
         //add new user to the trip
         if(!newUserToTrip.getText().toString().equals("")){
-            new AddUserBG(this).execute(newUserToTrip.getText().toString());
+            //new AddUserBG(this).execute(newUserToTrip.getText().toString());
+            new SendJoinNotif(this).execute(newUserToTrip.getText().toString());
             newUserToTrip.setText("");
         }
         else{

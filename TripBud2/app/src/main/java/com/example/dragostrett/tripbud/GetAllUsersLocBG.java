@@ -56,7 +56,7 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result){
         for(int j=0; j<a.size(); j++){
-            if(!name.get(j).equals(UserInfo.getUsername()) && !name.get(j).equals("") && visibility.get(j))
+            if(!name.get(j).equals(UserInfo.getUsername()) && !name.get(j).equals("") && (visibility.get(j)|| UserInfo.getType().equals("1")))
             map.addMarker(new MarkerOptions().position(a.get(j)).title(name.get(j)));
         }
     }

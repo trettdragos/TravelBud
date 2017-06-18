@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Toast.makeText(this, String.valueOf(UserInfo.isVisible())+ " "+UserInfo.getNotification(),
-                Toast.LENGTH_SHORT).show();
         //ending previous activity
         context=this;
         if (UserInfo.isLogedIn()) {
@@ -146,6 +144,15 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(this, "You are not part of any trip",
                         Toast.LENGTH_SHORT).show();
             }
+        }else if (id == R.id.nav_notifications) {
+            Intent intent = new Intent(this, NotificationActivity.class);
+            this.startActivity(intent);
+        }
+        else if (id == R.id.nav_chat) {
+            Toast.makeText(this, "Open chat",
+                    Toast.LENGTH_SHORT).show();
+            //Intent intent = new Intent(this, ManageAcountActivity.class);
+            //this.startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

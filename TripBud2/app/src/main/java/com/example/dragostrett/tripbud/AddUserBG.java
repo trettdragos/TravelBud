@@ -2,7 +2,6 @@ package com.example.dragostrett.tripbud;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -18,15 +17,18 @@ public class AddUserBG extends AsyncTask<String, Integer, String> {
     public AddUserBG(Context context){this.context=context;}
     @Override
     protected String doInBackground(String... params) {
-        String username=params[0];
+        String join=params[0];
         Connection con=null;
         PreparedStatement ps=null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
-            ps= (PreparedStatement) con.prepareStatement("UPDATE table1 SET trip=? WHERE username=?");
-            ps.setString(1, TripInfo.getNameTrip());
-            ps.setString(2, username);
+            ps= (PreparedStatement) con.prepareStatement("UPDATE table1 SET trip=?, notificare=? WHERE username=?");
+            if(join.equals("1"))
+                ps.setString(1, UserInfo.getNotification());
+            else ps.setString(1, "");
+            ps.setString(2, "");
+            ps.setString(3, UserInfo.getUsername());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,8 +37,7 @@ public class AddUserBG extends AsyncTask<String, Integer, String> {
     }
     @Override
     protected void onPostExecute(String result){
-            Toast.makeText(context, "User added",
-                    Toast.LENGTH_SHORT).show();
+        UserInfo.setNotification("");
 
     }
 }
