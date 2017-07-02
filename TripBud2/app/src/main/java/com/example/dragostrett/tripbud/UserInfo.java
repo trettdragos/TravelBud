@@ -19,6 +19,16 @@ public class UserInfo {
     public static String notification="";
     public static boolean visible=false;
 
+    public static boolean isAutoLogIn() {
+        return AutoLogIn;
+    }
+
+    public static void setAutoLogIn(boolean autoLogIn) {
+        AutoLogIn = autoLogIn;
+    }
+
+    public static boolean AutoLogIn=true;
+
     public static boolean isVisible() {
         return visible;
     }

@@ -65,4 +65,22 @@
         android:layout_alignBaseline="@+id/button"
         android:layout_alignBottom="@+id/button"
         android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:text="Remember me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBoxRemember"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/editText_password"
+        android:layout_alignStart="@+id/checkBoxLoggedIn" />
+
+    <CheckBox
+        android:text="Keep me logged in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBoxLoggedIn"
+        android:layout_below="@+id/checkBoxRemember"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

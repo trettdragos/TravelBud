@@ -4,35 +4,67 @@ import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class LogInActivity extends AppCompatActivity {
-
+    public static final String PREFS_NAME = "RemeberMeFile";
     EditText username;
     EditText password;
     int mNotificationId = 001;
     static  Context context;
     public static String pass="";
-
+    CheckBox rememberMe, loggedIn ;
+    public static SharedPreferences pref, prefAutoLogIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         username = (EditText)findViewById(R.id.editText_name);
         password = (EditText)findViewById(R.id.editText_password);
+        pref = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
+        String u=pref.getString("username", null);
+        String p = pref.getString("password", null);
+        Boolean autoLogIn=pref.getBoolean("autoLogIn", false);
+        username.setText(u);
+        password.setText(p);
+        if(autoLogIn){
+            if(UserInfo.isAutoLogIn()){
+                UserInfo.setLogedIn(false);
+                new loginBG(this).execute(u, p);
+            }else{
+                pref.edit().putString("username", UserInfo.getUsername()).putString("password", UserInfo.getPassword()).putBoolean("autoLogIn", false).commit();
+            }
+        }
         fa=this;
         context = this;
+        rememberMe=(CheckBox)findViewById(R.id.checkBoxRemember);
+        loggedIn=(CheckBox)findViewById(R.id.checkBoxLoggedIn);
+        loggedIn.setChecked(true);
+        rememberMe.setChecked(true);
     }
 
     public void loginUser(View view) throws InterruptedException {
         if(isOnline()){
-            String ps=password.getText().toString(), un=username.getText().toString();
+            if(username.getText().equals("") || password.getText().equals("")){
+                Toast.makeText(this, "Please enter username and password",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            } String ps=password.getText().toString(), un=username.getText().toString();
+            if(rememberMe.isChecked()) {
+                if(loggedIn.isChecked())
+                pref.edit().putString("username", un).putString("password", ps).putBoolean("autoLogIn", true).commit();
+                else pref.edit().putString("username", un).putString("password", ps).putBoolean("autoLogIn", false).commit();
+            }else if(!pref.getString("username", null).equals(un)){
+                pref.edit().putString("username", "").putString("password", "").putBoolean("autoLogIn", false).commit();
+            }
             pass=ps;
             UserInfo.setLogedIn(false);
             new loginBG(this).execute(un, ps);

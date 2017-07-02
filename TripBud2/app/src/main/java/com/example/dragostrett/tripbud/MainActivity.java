@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         context=this;
         cont=this;
         if (UserInfo.isLogedIn()) {
-            LogInActivity.fa.finish();
+            //LogInActivity.fa.finish();
             if (!k)
                 RegisterActivity.fa.finish();
         }
@@ -101,12 +101,15 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            //exit the app
+            //log out the app
+            UserInfo.setAutoLogIn(false);
+            LogInActivity.pref.edit().putString("username", UserInfo.getUsername()).putString("password", UserInfo.getPassword()).putBoolean("autoLogIn", false).commit();
             this.finishAndRemoveTask();
             return true;
         } else if (id == R.id.action_refresh) {
-            //refresh the map
-            //refresh();
+            //exit
+            LogInActivity.fa.finish();
+            this.finishAndRemoveTask();
             return true;
         }
 
