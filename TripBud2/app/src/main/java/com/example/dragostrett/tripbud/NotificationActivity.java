@@ -43,6 +43,9 @@ public class NotificationActivity extends AppCompatActivity {
 
     public void join(View view){
         new AddUserBG(this).execute("1");
+        UserInfo.setTrip(UserInfo.getNotification());
+        new loginBG(this).execute(UserInfo.getUsername(), UserInfo.getPassword());
+        MainActivity.cont.finishAndRemoveTask();
         this.finishAndRemoveTask ();
     }
     public void refuse(View view){

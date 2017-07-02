@@ -1,5 +1,6 @@
 package com.example.dragostrett.tripbud;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -42,13 +43,14 @@ public class MainActivity extends AppCompatActivity
     public static Location mLastLocation;
     public static Marker user, meet;
     public static Context context;
-    Boolean isOn = true;
+    public static Activity cont;
     public static boolean k;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //ending previous activity
         context=this;
+        cont=this;
         if (UserInfo.isLogedIn()) {
             LogInActivity.fa.finish();
             if (!k)
