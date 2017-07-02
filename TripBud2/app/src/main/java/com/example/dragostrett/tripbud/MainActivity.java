@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         Button action = (Button) findViewById(R.id.action_settings);
-        toolbar.setTitle("TripBud");
+        toolbar.setTitle("TravelBud");
+        float opacity = (float) 1;
+        toolbar.setAlpha(opacity);
         setSupportActionBar(toolbar);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity
             return true;
         } else if (id == R.id.action_refresh) {
             //exit
+            LogInActivity.pref.edit().putString("username", UserInfo.getUsername()).putString("password", UserInfo.getPassword()).putBoolean("autoLogIn", true).commit();
             LogInActivity.fa.finish();
             this.finishAndRemoveTask();
             return true;
