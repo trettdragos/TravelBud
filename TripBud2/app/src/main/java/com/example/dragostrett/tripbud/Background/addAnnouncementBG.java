@@ -1,10 +1,11 @@
-package com.example.dragostrett.tripbud;
+package com.example.dragostrett.tripbud.Background;
 
 import android.icu.text.DateFormat;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.mysql.jdbc.PreparedStatement;
 
 import java.sql.Connection;
@@ -25,7 +26,7 @@ public class addAnnouncementBG extends AsyncTask<String, Integer, String> {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
-            ps= (PreparedStatement) con.prepareStatement("INSERT INTO `"+UserInfo.getTrip()+"` (time, announcement) VALUES (?,?)");
+            ps= (PreparedStatement) con.prepareStatement("INSERT INTO `"+ UserInfo.getTrip()+"` (time, announcement) VALUES (?,?)");
             String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
             ps.setString(1, String.valueOf(currentDateTimeString));
             ps.setString(2, ana);

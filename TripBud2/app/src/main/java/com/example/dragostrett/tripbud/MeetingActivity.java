@@ -11,6 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dragostrett.tripbud.Background.DeleteMeet;
+import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+
 public class MeetingActivity extends AppCompatActivity {
 
     Button loc, delete;
@@ -68,7 +72,7 @@ public class MeetingActivity extends AppCompatActivity {
 
     }
     public void deleteMeet(View view){
-        new  DeleteMeet(this).execute();
+        new DeleteMeet(this).execute();
         finish();
     }
     @Override

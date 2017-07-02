@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.dragostrett.tripbud.Background.AnnouncementsBG;
+import com.example.dragostrett.tripbud.Background.addAnnouncementBG;
+import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+
 public class AnnouncementsActivity extends AppCompatActivity {
     EditText m;
     @Override

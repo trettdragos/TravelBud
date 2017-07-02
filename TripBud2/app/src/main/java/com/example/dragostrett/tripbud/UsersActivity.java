@@ -6,6 +6,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.dragostrett.tripbud.Background.UsersBG;
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+
 public class UsersActivity extends AppCompatActivity {
 
     @Override
@@ -13,7 +16,7 @@ public class UsersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Users from trip "+UserInfo.getTrip().toString());
+        toolbar.setTitle("Users from trip "+ UserInfo.getTrip().toString());
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

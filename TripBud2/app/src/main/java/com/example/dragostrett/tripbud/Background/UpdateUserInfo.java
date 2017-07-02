@@ -1,9 +1,10 @@
-package com.example.dragostrett.tripbud;
+package com.example.dragostrett.tripbud.Background;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.mysql.jdbc.PreparedStatement;
 
 import java.sql.Connection;

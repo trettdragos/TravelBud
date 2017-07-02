@@ -1,4 +1,4 @@
-package com.example.dragostrett.tripbud;
+package com.example.dragostrett.tripbud.BasicInfo;
 
 /**
  * Created by DragosTrett on 23.05.2017.

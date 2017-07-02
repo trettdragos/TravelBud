@@ -1,4 +1,4 @@
-package com.example.dragostrett.tripbud;
+package com.example.dragostrett.tripbud.Security;
 
 /**
  * Created by DragosTrett on 29.05.2017.

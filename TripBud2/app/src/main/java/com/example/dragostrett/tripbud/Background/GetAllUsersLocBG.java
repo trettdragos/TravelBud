@@ -1,8 +1,9 @@
-package com.example.dragostrett.tripbud;
+package com.example.dragostrett.tripbud.Background;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;

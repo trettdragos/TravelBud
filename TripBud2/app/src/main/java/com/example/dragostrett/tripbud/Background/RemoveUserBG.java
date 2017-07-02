@@ -1,4 +1,4 @@
-package com.example.dragostrett.tripbud;
+package com.example.dragostrett.tripbud.Background;
 
 import android.content.Context;
 import android.os.AsyncTask;

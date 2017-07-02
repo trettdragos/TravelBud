@@ -9,6 +9,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.dragostrett.tripbud.Background.UpdateUserInfo;
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+
 public class ManageAcountActivity extends AppCompatActivity {
 
     EditText username, email, pass1, pass2;

@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dragostrett.tripbud.Background.AddUserBG;
+import com.example.dragostrett.tripbud.Background.loginBG;
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+
 public class NotificationActivity extends AppCompatActivity {
 
     Button join, refuse;

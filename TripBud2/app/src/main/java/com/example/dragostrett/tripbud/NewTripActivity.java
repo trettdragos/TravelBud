@@ -7,6 +7,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.dragostrett.tripbud.Background.CreateAnnouncement;
+import com.example.dragostrett.tripbud.Background.CreateTrip;
+import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+
 public class NewTripActivity extends AppCompatActivity {
 
     @Override

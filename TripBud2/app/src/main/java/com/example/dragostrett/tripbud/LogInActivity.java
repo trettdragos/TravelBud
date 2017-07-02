@@ -14,6 +14,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.dragostrett.tripbud.Background.loginBG;
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+
 public class LogInActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "RemeberMeFile";
     EditText username;

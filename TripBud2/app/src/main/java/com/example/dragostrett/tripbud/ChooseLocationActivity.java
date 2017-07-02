@@ -6,6 +6,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.dragostrett.tripbud.Background.NewMeet;
+import com.example.dragostrett.tripbud.BasicInfo.MeetInfo;
+import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

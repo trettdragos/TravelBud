@@ -12,6 +12,8 @@ import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
+import com.example.dragostrett.tripbud.Background.UpdateLocationBG;
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;

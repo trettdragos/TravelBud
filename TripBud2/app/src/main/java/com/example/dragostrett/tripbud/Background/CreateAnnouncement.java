@@ -1,7 +1,8 @@
-package com.example.dragostrett.tripbud;
+package com.example.dragostrett.tripbud.Background;
 
 import android.os.AsyncTask;
 
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.mysql.jdbc.PreparedStatement;
 
 import java.sql.Connection;
@@ -19,7 +20,7 @@ public class CreateAnnouncement extends AsyncTask<String, Integer, String> {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
-            ps= (PreparedStatement) con.prepareStatement("CREATE TABLE `"+UserInfo.getTrip()+"` (" +
+            ps= (PreparedStatement) con.prepareStatement("CREATE TABLE `"+ UserInfo.getTrip()+"` (" +
                     "                      `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY," +
                     "                      `time` VARCHAR(50) NOT NULL," +
                     "                      `announcement` VARCHAR(50) NOT NULL" +

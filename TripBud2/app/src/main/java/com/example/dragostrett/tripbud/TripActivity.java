@@ -11,6 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dragostrett.tripbud.Background.DeleteTripBG;
+import com.example.dragostrett.tripbud.Background.RemoveUserBG;
+import com.example.dragostrett.tripbud.Background.SendJoinNotif;
+import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
+import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+
 public class TripActivity extends AppCompatActivity {
 
     TextView trip, place, organizator, meet;
