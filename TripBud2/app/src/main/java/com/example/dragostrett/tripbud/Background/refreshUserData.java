@@ -1,18 +1,12 @@
 package com.example.dragostrett.tripbud.Background;
 
-/**
- * Created by DragosTrett on 23.05.2017.
- */
-
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.example.dragostrett.tripbud.BasicInfo.MeetInfo;
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
-import com.example.dragostrett.tripbud.MainActivity;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -20,24 +14,27 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 
-public class loginBG extends AsyncTask<String, Integer, String> {
+/**
+ * Created by DragosTrett on 08.07.2017.
+ */
+
+public class refreshUserData extends AsyncTask<String, Integer, String> {
     Context context;
-    public loginBG(Context context){
+    GoogleMap mapP;
+    public refreshUserData(Context context, GoogleMap mapP){
         this.context=context;
+        this.mapP=mapP;
     }
     @Override
     protected String doInBackground(String... params) {
-        String user=params[0];
-        String pass=params[1];
         Connection con=null;
         PreparedStatement ps=null;
         ResultSet rs=null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
-            ps= (PreparedStatement) con.prepareStatement("SELECT * FROM table1 WHERE username=? AND password=?");
-            ps.setString(1, user);
-            ps.setString(2, pass);
+            ps= (PreparedStatement) con.prepareStatement("SELECT * FROM table1 WHERE username=?");
+            ps.setString(1, UserInfo.getUsername());
             rs=ps.executeQuery();
             if(!rs.isBeforeFirst()){
                 UserInfo.setLogedIn(false);
@@ -45,12 +42,6 @@ public class loginBG extends AsyncTask<String, Integer, String> {
             else{
                 UserInfo.setLogedIn(true);
                 while(rs.next()){
-                    UserInfo.setUsername(rs.getString("username"));
-                    UserInfo.setEmail(rs.getString("email"));
-                    UserInfo.setPassword(rs.getString("password"));
-                    UserInfo.setLatitudine(rs.getString("latitudine"));
-                    UserInfo.setLongitudine(rs.getString("longitudine"));
-                    UserInfo.setId(rs.getString("id"));
                     UserInfo.setTrip(rs.getString("trip"));
                     UserInfo.setType(rs.getString("type"));
                     String aux=rs.getString("visible");
@@ -93,22 +84,4 @@ public class loginBG extends AsyncTask<String, Integer, String> {
         }
         return "done";
     }
-
-    @Override
-    protected void onPostExecute(String result){
-        if(UserInfo.isLogedIn()){
-            UserInfo.setLogedIn(true);
-            MainActivity.k=true;
-            Intent intent = new Intent(context, MainActivity.class);
-            context.startActivity(intent);
-        }
-        else{
-            Toast.makeText(context, "Incorrect username or password",
-                    Toast.LENGTH_SHORT).show();
-            UserInfo.setLogedIn(false);
-        }
-
-
-    }
-
 }

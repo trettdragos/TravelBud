@@ -1,5 +1,7 @@
 package com.example.dragostrett.tripbud.BasicInfo;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by DragosTrett on 24.05.2017.
  */
@@ -11,6 +13,24 @@ public class TripInfo {
     public static String place;
     public static String organizator;
     public static String meet="";
+    public static LatLng circleCenter= new LatLng(0,0);
+    public static Integer circleRange=0;
+
+    public static Integer getCircleRange() {
+        return circleRange;
+    }
+
+    public static void setCircleRange(Integer circleRange) {
+        TripInfo.circleRange = circleRange;
+    }
+
+    public static LatLng getCircleCenter() {
+        return circleCenter;
+    }
+
+    public static void setCircleCenter(LatLng circleCenter) {
+        TripInfo.circleCenter = circleCenter;
+    }
 
     @Override
     public String toString() {

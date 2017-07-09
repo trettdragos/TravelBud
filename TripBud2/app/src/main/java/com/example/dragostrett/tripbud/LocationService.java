@@ -12,7 +12,6 @@ import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
-import com.example.dragostrett.tripbud.Background.UpdateLocationBG;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -150,7 +149,7 @@ public class LocationService extends Service {
                 loc.getLongitude();
                 UserInfo.setLatitudine(String.valueOf(loc.getLatitude()));
                 UserInfo.setLongitudine(String.valueOf(loc.getLongitude()));
-                new UpdateLocationBG().execute();
+                //new UpdateLocationBG().execute();
                 MainActivity.user.remove();
                 MainActivity.user=MainActivity.mMap.addMarker(new MarkerOptions().position(new LatLng(loc.getLatitude(), loc.getLongitude())).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             //}

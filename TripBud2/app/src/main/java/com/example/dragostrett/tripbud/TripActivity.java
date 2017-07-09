@@ -106,9 +106,10 @@ public class TripActivity extends AppCompatActivity {
     }
     public void createTrip(View view){
         //create new trip
+
         Intent intent = new Intent(this, NewTripActivity.class);
         this.startActivity(intent);
-        finishAndRemoveTask();
+        this.finishAndRemoveTask();
     }
     public void removeUser(View view){
         //remove user from trip

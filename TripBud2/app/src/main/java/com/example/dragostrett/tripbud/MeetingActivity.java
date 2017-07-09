@@ -22,6 +22,7 @@ public class MeetingActivity extends AppCompatActivity {
     TextView time;
     EditText date;
     EditText time2;
+    public static String untilConfirmSave="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,8 @@ public class MeetingActivity extends AppCompatActivity {
             Toast.makeText(this, "Please chose a time",
                     Toast.LENGTH_SHORT).show();
         else{
-            TripInfo.setMeet(date.getText().toString()+"\n"+time2.getText().toString());
+            //TripInfo.setMeet(date.getText().toString()+"\n"+time2.getText().toString());
+            untilConfirmSave=date.getText().toString()+";"+time2.getText().toString();
             Intent intent = new Intent(this, ChooseLocationActivity.class);
             startActivity(intent);
             this.finishAndRemoveTask();

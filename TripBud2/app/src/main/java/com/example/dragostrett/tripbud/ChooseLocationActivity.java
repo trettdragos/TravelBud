@@ -7,14 +7,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.dragostrett.tripbud.Background.NewMeet;
-import com.example.dragostrett.tripbud.BasicInfo.MeetInfo;
-import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -48,11 +45,7 @@ public class ChooseLocationActivity extends AppCompatActivity implements OnMapRe
                         Toast.LENGTH_SHORT).show();
             }
             else{
-                MeetInfo.setLatitudine(latitudine);
-                MeetInfo.setLongitudine(longitudine);
-                LatLng sydne = new LatLng(Double.parseDouble(MeetInfo.getLatitudine().toString()), Double.parseDouble(MeetInfo.getLongitudine().toString()));
-                MainActivity.meet = MainActivity.mMap.addMarker(new MarkerOptions().position(sydne).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                new NewMeet(this).execute();
+                new NewMeet(this).execute(MeetingActivity.untilConfirmSave, latitudine, longitudine);
                 Toast.makeText(this, "Meeting Point created",
                         Toast.LENGTH_SHORT).show();
                 this.finishAndRemoveTask ();

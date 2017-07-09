@@ -44,7 +44,7 @@ public class NewTripActivity extends AppCompatActivity {
         TripInfo.setInATrip(true);
         new CreateTrip(this).execute();
         new CreateAnnouncement().execute();
-        finish();
+        this.finish();
     }
 
 }

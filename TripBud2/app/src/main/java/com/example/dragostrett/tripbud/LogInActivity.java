@@ -21,11 +21,12 @@ public class LogInActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "RemeberMeFile";
     EditText username;
     EditText password;
-    int mNotificationId = 001;
+    static int mNotificationId = 001;
     static  Context context;
     public static String pass="";
     CheckBox rememberMe, loggedIn ;
     public static SharedPreferences pref, prefAutoLogIn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,20 @@ public class LogInActivity extends AppCompatActivity {
         loggedIn=(CheckBox)findViewById(R.id.checkBoxLoggedIn);
         loggedIn.setChecked(true);
         rememberMe.setChecked(true);
+        cancelNotification();
+        /*NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.x)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!")
+                        .setOngoing(true)
+                        .setAutoCancel(false)
+                        .setPriority(Notification.PRIORITY_MIN)
+                        .setDefaults(Notification.DEFAULT_ALL);
+
+        NotificationManager mNotifyMgr =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        mNotifyMgr.notify(mNotificationId, mBuilder.build());*/
     }
 
     public void loginUser(View view) throws InterruptedException {
@@ -76,21 +91,6 @@ public class LogInActivity extends AppCompatActivity {
             Toast.makeText(this, "No internet acces",
                     Toast.LENGTH_SHORT).show();
         }
-
-
-        /*NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.x)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!")
-                        .setOngoing(true)
-                        .setAutoCancel(false)
-                        .setPriority(Notification.PRIORITY_MAX)
-                        .setDefaults(Notification.DEFAULT_ALL);
-
-        NotificationManager mNotifyMgr =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(mNotificationId, mBuilder.build());*/
     }
     public void openRegisterAct(View view){
         if(isOnline()){
@@ -111,7 +111,7 @@ public class LogInActivity extends AppCompatActivity {
         NetworkInfo info=c.getActiveNetworkInfo();
         return info !=null && info.isConnectedOrConnecting();
     }
-    public void cancelNotification()
+    public static void cancelNotification()
     {
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 

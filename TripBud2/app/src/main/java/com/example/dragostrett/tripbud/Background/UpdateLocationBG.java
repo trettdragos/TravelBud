@@ -1,5 +1,6 @@
 package com.example.dragostrett.tripbud.Background;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
@@ -13,6 +14,11 @@ import java.sql.DriverManager;
  */
 
 public class UpdateLocationBG extends AsyncTask<String, Integer, String> {
+    Context context;
+    public UpdateLocationBG(Context context){
+        this.context=context;
+    }
+
     @Override
     protected String doInBackground(String... params) {
         Connection con=null;

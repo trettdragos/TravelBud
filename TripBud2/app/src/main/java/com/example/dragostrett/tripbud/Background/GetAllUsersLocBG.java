@@ -1,10 +1,24 @@
 package com.example.dragostrett.tripbud.Background;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
+import com.example.dragostrett.tripbud.BasicInfo.DistanceCalculator;
+import com.example.dragostrett.tripbud.BasicInfo.MeetInfo;
+import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+import com.example.dragostrett.tripbud.LogInActivity;
+import com.example.dragostrett.tripbud.MainActivity;
+import com.example.dragostrett.tripbud.R;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mysql.jdbc.PreparedStatement;
@@ -56,9 +70,42 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String result){
+        MainActivity.mMap.clear();
+        Circle circle = MainActivity.mMap.addCircle(new CircleOptions()
+                .center(TripInfo.getCircleCenter())
+                .radius(TripInfo.getCircleRange())
+                .strokeColor(Color.RED)
+                .fillColor(0x00000000));
+        if (!TripInfo.getMeet().equals("")) {
+            LatLng sydne = new LatLng(Double.parseDouble(MeetInfo.getLatitudine().toString()), Double.parseDouble(MeetInfo.getLongitudine().toString()));
+            MainActivity.meet = MainActivity.mMap.addMarker(new MarkerOptions().position(sydne).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        }
+        LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
+        MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        boolean everyoneInTheCircle=true;
         for(int j=0; j<a.size(); j++){
             if(!name.get(j).equals(UserInfo.getUsername()) && !name.get(j).equals("") && (visibility.get(j)|| UserInfo.getType().equals("1")))
-            map.addMarker(new MarkerOptions().position(a.get(j)).title(name.get(j)));
-        }
+            MainActivity.mMap.addMarker(new MarkerOptions().position(a.get(j)).title(name.get(j)));
+            if(UserInfo.getType().equals("1")){
+                if(DistanceCalculator.CalculationByDistance(TripInfo.getCircleCenter(), a.get(j))>TripInfo.getCircleRange()/1000 && !name.get(j).equals(UserInfo.getUsername())){
+                    //TODO create notifiction
+                    everyoneInTheCircle=false;
+                    Log.e("notif", String.valueOf(TripInfo.getCircleRange())+ " " + String.valueOf(DistanceCalculator.CalculationByDistance(TripInfo.getCircleCenter(), a.get(j))));
+                    NotificationCompat.Builder mBuilder =
+                            new NotificationCompat.Builder(context)
+                                    .setSmallIcon(R.drawable.xx)
+                                    .setContentTitle("User out of permited range")
+                                    .setContentText(name.get(j)+ " is out of range")
+                                    .setOngoing(false)
+                                    .setAutoCancel(true)
+                                    .setPriority(Notification.PRIORITY_MIN)
+                                    .setDefaults(Notification.DEFAULT_ALL);
+
+                    NotificationManager mNotifyMgr =
+                            (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+                    mNotifyMgr.notify(1, mBuilder.build());
+                }
+            }
+        }if(everyoneInTheCircle) LogInActivity.cancelNotification();
     }
 }
