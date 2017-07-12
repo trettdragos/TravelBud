@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:layout_centerHorizontal="true" android:layout_centerVertical="true">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:layout_centerHorizontal="true" android:layout_centerVertical="true"
+    android:padding="10dp">
+
+    <TextView
+        android:text="Please choose the radius:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewProgres"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:layout_margin="20dp"/>
+    <TextView
+        android:text="Values between 1 and 10km"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewMax"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+        android:layout_margin="20dp"/>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar3"
+        android:layout_margin="10dp"
+        android:progress="100"
+        android:max="90"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <Button
+            android:text="CANCEL"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button13"
+            android:layout_margin="20dp"
+            android:onClick="onCancel" />
+
+        <Button
+            android:text="OK"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button12"
+            android:layout_weight="1.49"
+            android:layout_margin="20dp"
+            android:onClick="onOK" />
+    </LinearLayout>
+</LinearLayout></RelativeLayout>

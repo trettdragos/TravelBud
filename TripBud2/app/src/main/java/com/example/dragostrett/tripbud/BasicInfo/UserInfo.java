@@ -1,5 +1,7 @@
 package com.example.dragostrett.tripbud.BasicInfo;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by DragosTrett on 23.05.2017.
  */
@@ -12,12 +14,19 @@ public class UserInfo {
     public static String trip;
     public static String id;
     public static String type;
-    public static String longitudine;
-    public static String latitudine;
     public static boolean logedIn;
     public static boolean location;
     public static String notification="";
     public static boolean visible=false;
+    public static LatLng userLoc;
+
+    public static LatLng getUserLoc() {
+        return userLoc;
+    }
+
+    public static void setUserLoc(LatLng userLoc) {
+        UserInfo.userLoc = userLoc;
+    }
 
     public static boolean isAutoLogIn() {
         return AutoLogIn;
@@ -58,14 +67,6 @@ public class UserInfo {
 
     public static void setLogedIn(boolean logedIn) {
         UserInfo.logedIn = logedIn;
-    }
-
-    public static String getLatitudine() {
-        return latitudine;
-    }
-
-    public static void setLatitudine(String latitudine) {
-        UserInfo.latitudine = latitudine;
     }
 
     public static String getUsername() {
@@ -115,14 +116,5 @@ public class UserInfo {
     public static void setType(String type) {
         UserInfo.type = type;
     }
-
-    public static String getLongitudine() {
-        return longitudine;
-    }
-
-    public static void setLongitudine(String longitudine) {
-        UserInfo.longitudine = longitudine;
-    }
-
 
 }

@@ -39,6 +39,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity
     public static boolean k;
     private static boolean started = false;
     private static Handler handler = new Handler();
+    public static Circle circle;
 
 
     @Override
@@ -166,6 +168,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
+        //stop();
         if (id == R.id.nav_manage_trip) {
             //change activity to trip manager
             Intent intent = new Intent(this, TripActivity.class);
@@ -216,15 +219,15 @@ public class MainActivity extends AppCompatActivity
         user= mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).visible(false));
         if (UserInfo.isLocation()) {
             //if user has gave location permision show him on the map
-            LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
+            LatLng sydney =UserInfo.getUserLoc();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(UserInfo.getLatitudine()), Double.parseDouble(UserInfo.getLongitudine())), 13));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(UserInfo.getUserLoc(), 13));
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(Double.parseDouble(UserInfo.getLatitudine()), Double.parseDouble(UserInfo.getLongitudine())))      // Sets the center of the map to location user
+                    .target(UserInfo.getUserLoc())// Sets the center of the map to location user
                     .zoom(12)
                     .build();
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));//move camera on current user
-            sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
+            sydney =UserInfo.getUserLoc();
             user = mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             if (!TripInfo.getMeet().equals("")) {
                 //add meeting point if existent
@@ -254,18 +257,17 @@ public class MainActivity extends AppCompatActivity
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
             //set user current location
-            UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
-            UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
+            UserInfo.setUserLoc(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
             UserInfo.setLocation(true);
-            LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
+            LatLng sydney = UserInfo.getUserLoc();
             if(k){
                 user.remove();
             //replace user position with current location
             user = mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(UserInfo.getLatitudine()), Double.parseDouble(UserInfo.getLongitudine())), 13));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(UserInfo.getUserLoc(), 13));
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(Double.parseDouble(UserInfo.getLatitudine()), Double.parseDouble(UserInfo.getLongitudine())))      // Sets the center of the map to location user
+                    .target(UserInfo.getUserLoc())      // Sets the center of the map to location user
                     .zoom(15)                   // Sets the zoom
                     .build();                   // Creates a CameraPosition from the builder
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));}
@@ -280,8 +282,7 @@ public class MainActivity extends AppCompatActivity
                 //Toast.makeText(context, "Location changed",
                 //        Toast.LENGTH_SHORT).show();
                 mLastLocation=location;
-                UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
-                UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
+                UserInfo.setUserLoc(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
                 Log.e("location", String.valueOf(mLastLocation.getLatitude())+" "+ String.valueOf(mLastLocation.getLongitude()));
                 new UpdateLocationBG(MainActivity.context).execute();
 
@@ -328,15 +329,14 @@ public class MainActivity extends AppCompatActivity
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if(mLastLocation!=null){
-            UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
-            UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
+            UserInfo.setUserLoc(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
             new UpdateLocationBG(context).execute();
         }
         new refreshUserData(context, mMap).execute();
         if(!UserInfo.getTrip().equals("")){
             new GetAllUsersLocBG(context, mMap).execute();
         }else {
-            LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
+            LatLng sydney = UserInfo.getUserLoc();
             MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         }
 

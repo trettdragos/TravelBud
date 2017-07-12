@@ -54,6 +54,8 @@ public class TripActivity extends AppCompatActivity {
             seeAll=(Button)findViewById(R.id.button3);
             seeAll.setVisibility(View.VISIBLE);
             if(UserInfo.getType().equals("1")){//check is user is admin to give him admin acces
+                Button range=(Button)findViewById(R.id.buttonRange);
+                range.setVisibility(View.VISIBLE);
                 newUserToTrip=(EditText)findViewById(R.id.editText_username);
                 newUserToTrip.setVisibility(View.VISIBLE);
                 addnew=(Button)findViewById(R.id.button5);
@@ -121,5 +123,10 @@ public class TripActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter a name",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+    public void editRange(View view){
+        Intent intent = new Intent(this, ChooseRangeCenterActivity.class);
+        this.startActivity(intent);
+        this.finishAndRemoveTask();
     }
 }

@@ -147,8 +147,7 @@ public class LocationService extends Service {
             //if(isBetterLocation(loc, previousBestLocation)) {
                 loc.getLatitude();
                 loc.getLongitude();
-                UserInfo.setLatitudine(String.valueOf(loc.getLatitude()));
-                UserInfo.setLongitudine(String.valueOf(loc.getLongitude()));
+                UserInfo.setUserLoc(new LatLng(loc.getLatitude(), loc.getLongitude()));
                 //new UpdateLocationBG().execute();
                 MainActivity.user.remove();
                 MainActivity.user=MainActivity.mMap.addMarker(new MarkerOptions().position(new LatLng(loc.getLatitude(), loc.getLongitude())).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));

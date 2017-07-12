@@ -48,8 +48,7 @@ public class loginBG extends AsyncTask<String, Integer, String> {
                     UserInfo.setUsername(rs.getString("username"));
                     UserInfo.setEmail(rs.getString("email"));
                     UserInfo.setPassword(rs.getString("password"));
-                    UserInfo.setLatitudine(rs.getString("latitudine"));
-                    UserInfo.setLongitudine(rs.getString("longitudine"));
+                    UserInfo.setUserLoc(new LatLng(Double.parseDouble(rs.getString("latitudine")), Double.parseDouble(rs.getString("longitudine"))));
                     UserInfo.setId(rs.getString("id"));
                     UserInfo.setTrip(rs.getString("trip"));
                     UserInfo.setType(rs.getString("type"));

@@ -65,16 +65,6 @@
         android:visibility="invisible"/>
 
     <Button
-        android:text=" See participants"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button3"
-        android:layout_above="@+id/textView4"
-        android:layout_centerHorizontal="true"
-        android:onClick="seeUsers"
-        android:visibility="invisible"/>
-
-    <Button
         android:text="Delete Trip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -137,6 +127,27 @@
         android:id="@+id/button_deleteUser"
         android:visibility="invisible"
         android:onClick="removeUser" />
+
+    <Button
+        android:text=" See participants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+        android:onClick="seeUsers"
+        android:visibility="invisible"
+        android:layout_above="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp" />
+
+    <Button
+        android:text="Edit Range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonRange"
+        android:visibility="invisible"
+        android:onClick="editRange"
+        android:layout_above="@+id/editText_username"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

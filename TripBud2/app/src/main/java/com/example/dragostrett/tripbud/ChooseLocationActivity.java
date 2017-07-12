@@ -76,14 +76,14 @@ public class ChooseLocationActivity extends AppCompatActivity implements OnMapRe
     public void onMapReady(GoogleMap googleMap) {
         mmMap = googleMap;
         mmMap.setOnMarkerDragListener(this);
-        LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
+        LatLng sydney = UserInfo.getUserLoc();
         shit = new MarkerOptions().position(sydney).title("Location").draggable(true);
         mmMap.addMarker(shit);
         mmMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mmMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(UserInfo.getLatitudine()), Double.parseDouble(UserInfo.getLongitudine())), 13));
+        mmMap.animateCamera(CameraUpdateFactory.newLatLngZoom(UserInfo.getUserLoc(), 13));
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(Double.parseDouble(UserInfo.getLatitudine()), Double.parseDouble(UserInfo.getLongitudine())))       // Sets the center of the map to location user
+                .target(UserInfo.getUserLoc())       // Sets the center of the map to location user
                 .zoom(15)                   // Sets the zoom
                 .build();                   // Creates a CameraPosition from the builder
         mmMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));

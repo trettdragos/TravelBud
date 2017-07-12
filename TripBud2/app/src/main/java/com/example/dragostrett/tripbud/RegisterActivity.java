@@ -18,6 +18,7 @@ import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.example.dragostrett.tripbud.Security.SecurityCheck;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 
 public class RegisterActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks {
 
@@ -81,8 +82,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
             UserInfo.setLocation(true);
-            UserInfo.setLatitudine(String.valueOf(mLastLocation.getLatitude()));
-            UserInfo.setLongitudine(String.valueOf(mLastLocation.getLongitude()));
+            UserInfo.setUserLoc(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
         } else {Toast.makeText(this, "Location Failure",
                 Toast.LENGTH_SHORT).show();
             UserInfo.setLocation(false);}

@@ -17,7 +17,6 @@ import com.example.dragostrett.tripbud.MainActivity;
 import com.example.dragostrett.tripbud.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -71,7 +70,8 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result){
         MainActivity.mMap.clear();
-        Circle circle = MainActivity.mMap.addCircle(new CircleOptions()
+        Log.e("range", String.valueOf(TripInfo.getCircleRange()));
+        MainActivity.circle = MainActivity.mMap.addCircle(new CircleOptions()
                 .center(TripInfo.getCircleCenter())
                 .radius(TripInfo.getCircleRange())
                 .strokeColor(Color.RED)
@@ -80,7 +80,7 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
             LatLng sydne = new LatLng(Double.parseDouble(MeetInfo.getLatitudine().toString()), Double.parseDouble(MeetInfo.getLongitudine().toString()));
             MainActivity.meet = MainActivity.mMap.addMarker(new MarkerOptions().position(sydne).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
-        LatLng sydney = new LatLng(Double.parseDouble(UserInfo.getLatitudine().toString()), Double.parseDouble(UserInfo.getLongitudine().toString()));
+        LatLng sydney = UserInfo.getUserLoc();
         MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         boolean everyoneInTheCircle=true;
         for(int j=0; j<a.size(); j++){
@@ -88,9 +88,8 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
             MainActivity.mMap.addMarker(new MarkerOptions().position(a.get(j)).title(name.get(j)));
             if(UserInfo.getType().equals("1")){
                 if(DistanceCalculator.CalculationByDistance(TripInfo.getCircleCenter(), a.get(j))>TripInfo.getCircleRange()/1000 && !name.get(j).equals(UserInfo.getUsername())){
-                    //TODO create notifiction
                     everyoneInTheCircle=false;
-                    Log.e("notif", String.valueOf(TripInfo.getCircleRange())+ " " + String.valueOf(DistanceCalculator.CalculationByDistance(TripInfo.getCircleCenter(), a.get(j))));
+                    //Log.e("notif", String.valueOf(TripInfo.getCircleRange())+ " " + String.valueOf(DistanceCalculator.CalculationByDistance(TripInfo.getCircleCenter(), a.get(j))));
                     NotificationCompat.Builder mBuilder =
                             new NotificationCompat.Builder(context)
                                     .setSmallIcon(R.drawable.xx)

@@ -69,7 +69,10 @@
         <activity
             android:name=".TestingActivity"
             android:label="@string/title_activity_testing"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChooseRangeCenterActivity"
+            android:label="@string/title_activity_choose_range_center"></activity>
     </application>
 
 </manifest>
