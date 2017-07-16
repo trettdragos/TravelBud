@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //ending previous activity
-        start();
         //LogInActivity.cancelNotification();
         context=this;
         cont=this;
@@ -101,9 +100,9 @@ public class MainActivity extends AppCompatActivity
     private static Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            refresh();
             Log.e("refresh", "refreshed again");
             if(started) {
+                refresh();
                 start();
             }
             else return;
@@ -117,7 +116,7 @@ public class MainActivity extends AppCompatActivity
 
     public static void start() {
         started = true;
-        handler.postDelayed(runnable, 1000);
+        handler.postDelayed(runnable, 5000);
     }
     public void onDestroy() {
         super.onDestroy();
@@ -125,6 +124,17 @@ public class MainActivity extends AppCompatActivity
         stop();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stop();
+    }
 
     @Override
     public void onBackPressed() {
@@ -168,7 +178,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        //stop();
+        stop();
         if (id == R.id.nav_manage_trip) {
             //change activity to trip manager
             Intent intent = new Intent(this, TripActivity.class);
@@ -237,6 +247,7 @@ public class MainActivity extends AppCompatActivity
             if(!UserInfo.getTrip().equals(""))//add other users if the user is in a trip
             new GetAllUsersLocBG(this, mMap).execute();
         }
+        start();
     }
 
 
@@ -334,6 +345,7 @@ public class MainActivity extends AppCompatActivity
         }
         new refreshUserData(context, mMap).execute();
         if(!UserInfo.getTrip().equals("")){
+            if(TripInfo.isInATrip())
             new GetAllUsersLocBG(context, mMap).execute();
         }else {
             LatLng sydney = UserInfo.getUserLoc();

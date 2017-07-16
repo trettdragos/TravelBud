@@ -6,7 +6,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.example.dragostrett.tripbud.BasicInfo.DistanceCalculator;
 import com.example.dragostrett.tripbud.BasicInfo.MeetInfo;
@@ -70,12 +69,13 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result){
         MainActivity.mMap.clear();
-        Log.e("range", String.valueOf(TripInfo.getCircleRange()));
-        MainActivity.circle = MainActivity.mMap.addCircle(new CircleOptions()
-                .center(TripInfo.getCircleCenter())
-                .radius(TripInfo.getCircleRange())
-                .strokeColor(Color.RED)
-                .fillColor(0x00000000));
+        if(!TripInfo.getCircleRange().equals(0)){
+            MainActivity.circle = MainActivity.mMap.addCircle(new CircleOptions()
+                    .center(TripInfo.getCircleCenter())
+                    .radius(TripInfo.getCircleRange())
+                    .strokeColor(Color.RED)
+                    .fillColor(0x00000000));
+        }
         if (!TripInfo.getMeet().equals("")) {
             LatLng sydne = new LatLng(Double.parseDouble(MeetInfo.getLatitudine().toString()), Double.parseDouble(MeetInfo.getLongitudine().toString()));
             MainActivity.meet = MainActivity.mMap.addMarker(new MarkerOptions().position(sydne).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
@@ -87,22 +87,24 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
             if(!name.get(j).equals(UserInfo.getUsername()) && !name.get(j).equals("") && (visibility.get(j)|| UserInfo.getType().equals("1")))
             MainActivity.mMap.addMarker(new MarkerOptions().position(a.get(j)).title(name.get(j)));
             if(UserInfo.getType().equals("1")){
-                if(DistanceCalculator.CalculationByDistance(TripInfo.getCircleCenter(), a.get(j))>TripInfo.getCircleRange()/1000 && !name.get(j).equals(UserInfo.getUsername())){
-                    everyoneInTheCircle=false;
-                    //Log.e("notif", String.valueOf(TripInfo.getCircleRange())+ " " + String.valueOf(DistanceCalculator.CalculationByDistance(TripInfo.getCircleCenter(), a.get(j))));
-                    NotificationCompat.Builder mBuilder =
-                            new NotificationCompat.Builder(context)
-                                    .setSmallIcon(R.drawable.xx)
-                                    .setContentTitle("User out of permited range")
-                                    .setContentText(name.get(j)+ " is out of range")
-                                    .setOngoing(false)
-                                    .setAutoCancel(true)
-                                    .setPriority(Notification.PRIORITY_MIN)
-                                    .setDefaults(Notification.DEFAULT_ALL);
+                if(!TripInfo.getCircleRange().equals(0)){
+                    if(DistanceCalculator.CalculationByDistance(TripInfo.getCircleCenter(), a.get(j))>TripInfo.getCircleRange()/1000 && !name.get(j).equals(UserInfo.getUsername())){
+                        everyoneInTheCircle=false;
+                        //Log.e("notif", String.valueOf(TripInfo.getCircleRange())+ " " + String.valueOf(DistanceCalculator.CalculationByDistance(TripInfo.getCircleCenter(), a.get(j))));
+                        NotificationCompat.Builder mBuilder =
+                                new NotificationCompat.Builder(context)
+                                        .setSmallIcon(R.drawable.xx)
+                                        .setContentTitle("User out of permited range")
+                                        .setContentText(name.get(j)+ " is out of range")
+                                        .setOngoing(false)
+                                        .setAutoCancel(true)
+                                        .setPriority(Notification.PRIORITY_MIN)
+                                        .setDefaults(Notification.DEFAULT_ALL);
 
-                    NotificationManager mNotifyMgr =
-                            (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-                    mNotifyMgr.notify(1, mBuilder.build());
+                        NotificationManager mNotifyMgr =
+                                (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+                        mNotifyMgr.notify(1, mBuilder.build());
+                    }
                 }
             }
         }if(everyoneInTheCircle) LogInActivity.cancelNotification();

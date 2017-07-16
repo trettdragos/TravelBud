@@ -40,6 +40,7 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            MainActivity.start();
             this.finishAndRemoveTask ();
         }
         return super.onOptionsItemSelected(item);
@@ -55,6 +56,7 @@ public class NotificationActivity extends AppCompatActivity {
     public void refuse(View view){
         UserInfo.setNotification("");
         new AddUserBG(this).execute("0");
+        MainActivity.start();
         this.finishAndRemoveTask ();
     }
 

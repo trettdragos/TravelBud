@@ -2,10 +2,12 @@ package com.example.dragostrett.tripbud.Background;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.example.dragostrett.tripbud.MainActivity;
+import com.example.dragostrett.tripbud.TripActivity;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -42,5 +44,7 @@ public class UpdateCircle extends AsyncTask<String, Integer, String> {
     @Override
     public void onPostExecute(String rsult){
         MainActivity.start();
+        Toast.makeText(context, "Range updated", Toast.LENGTH_SHORT).show();
+        TripActivity.tripAc.finishAndRemoveTask();
     }
 }

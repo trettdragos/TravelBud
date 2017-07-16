@@ -40,6 +40,7 @@ public class DeleteMeet extends AsyncTask<String, Integer, String> {
     }
     @Override
     protected void onPostExecute(String result){
+        MainActivity.start();
         Toast.makeText(context, "Meet Delete",
                 Toast.LENGTH_SHORT).show();
         TripInfo.setMeet("");

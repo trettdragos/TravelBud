@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+import com.example.dragostrett.tripbud.MainActivity;
 import com.mysql.jdbc.PreparedStatement;
 
 import java.sql.Connection;
@@ -45,7 +46,7 @@ public class UpdateUserInfo extends AsyncTask<String, Integer, String> {
     }
     @Override
     protected void onPostExecute(String result){
-
+        MainActivity.start();
             Toast.makeText(context, "Changes saved",
                     Toast.LENGTH_SHORT).show();
 

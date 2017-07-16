@@ -27,7 +27,7 @@ public class CreateTrip extends AsyncTask<String, Integer, String> {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
-            ps= (PreparedStatement) con.prepareStatement("INSERT INTO trips (name, place, organizator, meet, number_users) VALUES (?,?,?, '', '1')");
+            ps= (PreparedStatement) con.prepareStatement("INSERT INTO trips (name, place, organizator, meet, number_users, circleRange, LatitudineCentru, LongitudineCentru, startDate, endDate) VALUES (?,?,?, '', '1', '0', '0', '0', '2017-04-29', '2017-04-30')");
             ps.setString(1, TripInfo.getNameTrip());
             ps.setString(2, TripInfo.getPlace());
             ps.setString(3, TripInfo.getOrganizator());

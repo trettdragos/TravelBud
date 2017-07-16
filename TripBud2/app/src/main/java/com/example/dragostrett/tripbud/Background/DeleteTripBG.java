@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+import com.example.dragostrett.tripbud.MainActivity;
 import com.mysql.jdbc.PreparedStatement;
 
 import java.sql.Connection;
@@ -47,6 +48,11 @@ public class DeleteTripBG extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result){
         TripInfo.setInATrip(false);
+        UserInfo.setTrip("");
+        //MainActivity.start();
+        //MainActivity.mMap.clear();
+        new loginBG(context).execute(UserInfo.getUsername(), UserInfo.getPassword());
+        MainActivity.cont.finishAndRemoveTask();
         Toast.makeText(context, "Trip Deleted",
                 Toast.LENGTH_SHORT).show();
 

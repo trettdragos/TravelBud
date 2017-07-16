@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+import com.example.dragostrett.tripbud.MainActivity;
 import com.mysql.jdbc.PreparedStatement;
 
 import java.sql.Connection;
@@ -42,5 +43,6 @@ public class NewMeet extends AsyncTask<String, Integer, String> {
     }
     @Override
     protected void onPostExecute(String result){
+        MainActivity.start();
     }
 }

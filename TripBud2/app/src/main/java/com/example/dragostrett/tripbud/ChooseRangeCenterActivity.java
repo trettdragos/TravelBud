@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dragostrett.tripbud.Background.UpdateCircle;
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
@@ -79,6 +78,7 @@ public class ChooseRangeCenterActivity extends AppCompatActivity implements OnMa
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (item.getItemId() == android.R.id.home) {
+            MainActivity.start();
             this.finishAndRemoveTask ();
         }else if (id == R.id.action_next) {
             setContentView(R.layout.radius_dialog);
@@ -94,6 +94,7 @@ public class ChooseRangeCenterActivity extends AppCompatActivity implements OnMa
 
     @Override
     public void onBackPressed() {
+        MainActivity.start();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -115,7 +116,6 @@ public class ChooseRangeCenterActivity extends AppCompatActivity implements OnMa
     @Override
     public void onMarkerDragEnd(Marker marker) {
         lastLoc=marker.getPosition();
-        Toast.makeText(this, String.valueOf(marker.getPosition()), Toast.LENGTH_SHORT).show();
     }
 
     public void onCancel(View view){
@@ -125,8 +125,6 @@ public class ChooseRangeCenterActivity extends AppCompatActivity implements OnMa
     public void onOK(View view){
         TripInfo.setCircleCenter(lastLoc);
         TripInfo.setCircleRange(prog*1000);
-        Toast.makeText(this, String.valueOf(TripInfo.getCircleCenter()), Toast.LENGTH_SHORT).show();
-        //TODO update DB
         new UpdateCircle(this).execute();
         this.finishAndRemoveTask();
     }

@@ -1,5 +1,6 @@
 package com.example.dragostrett.tripbud;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.example.dragostrett.tripbud.Background.DeleteTripBG;
 import com.example.dragostrett.tripbud.Background.RemoveUserBG;
 import com.example.dragostrett.tripbud.Background.SendJoinNotif;
+import com.example.dragostrett.tripbud.Background.UpdateCircle;
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 
@@ -22,9 +24,10 @@ public class TripActivity extends AppCompatActivity {
     TextView trip, place, organizator, meet;
     EditText newUserToTrip, userName;
     Button seeAll, addnew, delete, create, deleteUser;
-
+    public static Activity tripAc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        tripAc=this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -56,6 +59,8 @@ public class TripActivity extends AppCompatActivity {
             if(UserInfo.getType().equals("1")){//check is user is admin to give him admin acces
                 Button range=(Button)findViewById(R.id.buttonRange);
                 range.setVisibility(View.VISIBLE);
+                Button dRange=(Button)findViewById(R.id.button_delete_range);
+                dRange.setVisibility(View.VISIBLE);
                 newUserToTrip=(EditText)findViewById(R.id.editText_username);
                 newUserToTrip.setVisibility(View.VISIBLE);
                 addnew=(Button)findViewById(R.id.button5);
@@ -78,6 +83,7 @@ public class TripActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            MainActivity.start();
             this.finishAndRemoveTask ();
         }
         return super.onOptionsItemSelected(item);
@@ -128,5 +134,10 @@ public class TripActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ChooseRangeCenterActivity.class);
         this.startActivity(intent);
         this.finishAndRemoveTask();
+    }
+    public void deleteRange(View view){
+        TripInfo.setCircleRange(0);
+        new UpdateCircle(this).execute();
+        //this.finishAndRemoveTask();
     }
 }

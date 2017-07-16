@@ -146,8 +146,18 @@
         android:id="@+id/buttonRange"
         android:visibility="invisible"
         android:onClick="editRange"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Delete Range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_delete_range"
+        android:visibility="invisible"
+        android:onClick="deleteRange"
         android:layout_above="@+id/editText_username"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
