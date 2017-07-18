@@ -13,4 +13,22 @@
     tools:context="com.example.dragostrett.tripbud.TestingActivity"
     tools:showIn="@layout/activity_testing">
 
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/button10"
+        android:onClick="openDatePicker" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonEnd"
+        android:onClick="openSecond"
+        android:layout_below="@+id/button10"
+        android:layout_alignStart="@+id/button10"
+        android:visibility="invisible" />
 </RelativeLayout>
