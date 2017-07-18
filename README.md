@@ -1,2 +1,2 @@
 # TripBud
-Download apk from https://mega.nz/#!R2oyhC5D!AKlFPDYHs0tKQa9NYPqMvUXrFbDUIq5_EQVjuMiyP1U
+Download apk from https://mega.nz/#!ciI0gRZa!uXY20QWfqy8anRK9_dDmSkmzTkaiw58DF-cuyMhaR0c
