@@ -77,6 +77,8 @@ public class loginBG extends AsyncTask<String, Integer, String> {
                     TripInfo.setOrganizator(rs.getString("organizator"));
                     TripInfo.setMeet(rs.getString("meet"));
                     TripInfo.setNumber_users(rs.getString("number_users"));
+                    TripInfo.setStartDate(rs.getDate("startDate"));
+                    TripInfo.setEndDate(rs.getDate("endDate"));
                 }
             }
             if(!TripInfo.getMeet().equals("")){
@@ -106,8 +108,11 @@ public class loginBG extends AsyncTask<String, Integer, String> {
                     Toast.LENGTH_SHORT).show();
             UserInfo.setLogedIn(false);
         }
-
-
+        if(UserInfo.getCurentDate().before(TripInfo.getStartDate()) || UserInfo.getCurentDate().after(TripInfo.getEndDate())){
+            UserInfo.setShowEveryThing(false);
+        }
+        else
+            UserInfo.setShowEveryThing(true);
     }
 
 }

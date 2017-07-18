@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity
                 LatLng sydne = new LatLng(Double.parseDouble(MeetInfo.getLatitudine().toString()), Double.parseDouble(MeetInfo.getLongitudine().toString()));
                 meet = mMap.addMarker(new MarkerOptions().position(sydne).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
             }
-            if(!UserInfo.getTrip().equals(""))//add other users if the user is in a trip
+            if(!UserInfo.getTrip().equals("") && UserInfo.isShowEveryThing())//add other users if the user is in a trip
             new GetAllUsersLocBG(this, mMap).execute();
         }
         start();
@@ -344,13 +344,12 @@ public class MainActivity extends AppCompatActivity
             new UpdateLocationBG(context).execute();
         }
         new refreshUserData(context, mMap).execute();
-        if(!UserInfo.getTrip().equals("")){
+        if(!UserInfo.getTrip().equals("") && UserInfo.isShowEveryThing()){
             if(TripInfo.isInATrip())
             new GetAllUsersLocBG(context, mMap).execute();
         }else {
             LatLng sydney = UserInfo.getUserLoc();
             MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         }
-
     }
 }

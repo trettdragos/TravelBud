@@ -27,10 +27,12 @@ public class CreateTrip extends AsyncTask<String, Integer, String> {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
-            ps= (PreparedStatement) con.prepareStatement("INSERT INTO trips (name, place, organizator, meet, number_users, circleRange, LatitudineCentru, LongitudineCentru, startDate, endDate) VALUES (?,?,?, '', '1', '0', '0', '0', '2017-04-29', '2017-04-30')");
+            ps= (PreparedStatement) con.prepareStatement("INSERT INTO trips (name, place, organizator, meet, number_users, circleRange, LatitudineCentru, LongitudineCentru, startDate, endDate) VALUES (?,?,?, '', '1', '0', '0', '0', ?, ?)");
             ps.setString(1, TripInfo.getNameTrip());
             ps.setString(2, TripInfo.getPlace());
             ps.setString(3, TripInfo.getOrganizator());
+            ps.setString(4, TripInfo.getStartDate().toString());
+            ps.setString(5, TripInfo.getEndDate().toString());
             ps.executeUpdate();
             TripInfo.setMeet("");
             ps= (PreparedStatement) con.prepareStatement("UPDATE table1 SET trip=? WHERE username=?");

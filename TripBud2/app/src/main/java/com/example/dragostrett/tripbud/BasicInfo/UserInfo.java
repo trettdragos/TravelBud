@@ -2,6 +2,8 @@ package com.example.dragostrett.tripbud.BasicInfo;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.sql.Date;
+
 /**
  * Created by DragosTrett on 23.05.2017.
  */
@@ -19,6 +21,24 @@ public class UserInfo {
     public static String notification="";
     public static boolean visible=false;
     public static LatLng userLoc;
+    public static Date curentDate;
+    public static boolean showEveryThing=false;
+
+    public static boolean isShowEveryThing() {
+        return showEveryThing;
+    }
+
+    public static void setShowEveryThing(boolean showEveryThing) {
+        UserInfo.showEveryThing = showEveryThing;
+    }
+
+    public static Date getCurentDate() {
+        return curentDate;
+    }
+
+    public static void setCurentDate(Date curentDate) {
+        UserInfo.curentDate = curentDate;
+    }
 
     public static LatLng getUserLoc() {
         return userLoc;

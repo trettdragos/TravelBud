@@ -45,22 +45,64 @@
         android:id="@+id/editText3"
         android:hint="Place" />
 
-    <Button
-        android:text="Create"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="59dp"
-        android:id="@+id/button8"
-        android:onClick="createTrip" />
-
     <TextView
         android:text="By creating the trip you become the admin of the trip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button8"
+        android:id="@+id/textView14"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/textView14" />
+        android:layout_marginBottom="29dp" />
+
+    <Button
+        android:text="Create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button8"
+        android:onClick="createTrip"
+        android:layout_above="@+id/textView14"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp" />
+
+    <Button
+        android:text="Set End Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSecondDatePicker"
+        android:layout_below="@+id/button15"
+        android:layout_alignStart="@+id/button15"
+        android:layout_alignEnd="@+id/button15"
+        android:onClick="openSecondDatePicker"
+        android:visibility="invisible" />
+
+    <TextView
+        android:text="Start Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewStartDate"
+        style="@style/Base.TextAppearance.AppCompat.Large"
+        android:layout_alignBaseline="@+id/button15"
+        android:layout_alignBottom="@+id/button15"
+        android:layout_alignEnd="@+id/editText3" />
+
+    <TextView
+        android:text="End Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewEndDate"
+        style="@style/Base.TextAppearance.AppCompat.Large"
+        android:layout_alignBaseline="@+id/buttonSecondDatePicker"
+        android:layout_alignBottom="@+id/buttonSecondDatePicker"
+        android:layout_alignEnd="@+id/textViewStartDate"
+        android:layout_toEndOf="@+id/buttonSecondDatePicker" />
+
+    <Button
+        android:text="Set Start Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button15"
+        android:onClick="openDatePicker"
+        android:layout_below="@+id/editText3"
+        android:layout_toStartOf="@+id/textViewStartDate" />
 
 </RelativeLayout>

@@ -21,7 +21,7 @@ import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 
 public class TripActivity extends AppCompatActivity {
 
-    TextView trip, place, organizator, meet;
+    TextView trip, place, organizator, time;
     EditText newUserToTrip, userName;
     Button seeAll, addnew, delete, create, deleteUser;
     public static Activity tripAc;
@@ -46,14 +46,13 @@ public class TripActivity extends AppCompatActivity {
             place.setText("Location: "+TripInfo.getPlace());
             organizator=(TextView)findViewById(R.id.textView_organizator);
             organizator.setText("Organizator: "+TripInfo.getOrganizator());
-            meet=(TextView)findViewById(R.id.textView_meet);
-            if(TripInfo.getMeet().equals("")){meet.setText("Meeting place not placed yet");//display meeting time if exists
-            }else
-            meet.setText("Meeting time: "+TripInfo.getMeet());
+            time=(TextView)findViewById(R.id.textViewPeriod);
+            time.setText("Starting from:"+TripInfo.getStartDate()+"\n"+"Ending on:"+TripInfo.getEndDate());
+            time.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             trip.setVisibility(View.VISIBLE);
             place.setVisibility(View.VISIBLE);
             organizator.setVisibility(View.VISIBLE);
-            meet.setVisibility(View.VISIBLE);
+            time.setVisibility(View.VISIBLE);
             seeAll=(Button)findViewById(R.id.button3);
             seeAll.setVisibility(View.VISIBLE);
             if(UserInfo.getType().equals("1")){//check is user is admin to give him admin acces

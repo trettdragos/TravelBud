@@ -16,8 +16,8 @@ import java.util.Calendar;
 
 public class TestingActivity extends AppCompatActivity {
 
-    public static final int DIALOG_ID=45;
-    public static final int DIALOG_ID2=54;
+    public static final int DIALOG_ID=44;
+    public static final int DIALOG_ID2=53;
     int yearStart, monthStart, dayStart;
     int yearEnd, monthEnd, dayEnd;
     Button choseEnd;
@@ -58,9 +58,9 @@ public class TestingActivity extends AppCompatActivity {
 
     @Override
     protected Dialog onCreateDialog(int id){
-        if(id==45){
+        if(id==44){
             return new DatePickerDialog(this, datePickierListenerStart, yearStart, monthStart, dayStart);
-        }if(id==54){
+        }if(id==53){
             return new DatePickerDialog(this, datePickierListenerEnd, yearEnd, monthEnd, dayEnd);
         }
         return null;

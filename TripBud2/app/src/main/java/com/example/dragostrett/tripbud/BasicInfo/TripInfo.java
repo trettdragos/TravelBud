@@ -2,6 +2,8 @@ package com.example.dragostrett.tripbud.BasicInfo;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.sql.Date;
+
 /**
  * Created by DragosTrett on 24.05.2017.
  */
@@ -15,6 +17,24 @@ public class TripInfo {
     public static String meet="";
     public static LatLng circleCenter= new LatLng(0,0);
     public static Integer circleRange=0;
+    public static Date endDate;
+    public static  Date startDate;
+
+    public static Date getEndDate() {
+        return endDate;
+    }
+
+    public static void setEndDate(Date endDate) {
+        TripInfo.endDate = endDate;
+    }
+
+    public static Date getStartDate() {
+        return startDate;
+    }
+
+    public static void setStartDate(Date startDate) {
+        TripInfo.startDate = startDate;
+    }
 
     public static Integer getCircleRange() {
         return circleRange;

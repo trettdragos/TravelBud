@@ -2,6 +2,7 @@ package com.example.dragostrett.tripbud.Background;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.dragostrett.tripbud.BasicInfo.MeetInfo;
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
@@ -69,6 +70,8 @@ public class refreshUserData extends AsyncTask<String, Integer, String> {
                     TripInfo.setOrganizator(rs.getString("organizator"));
                     TripInfo.setMeet(rs.getString("meet"));
                     TripInfo.setNumber_users(rs.getString("number_users"));
+                    TripInfo.setStartDate(rs.getDate("startDate"));
+                    TripInfo.setEndDate(rs.getDate("endDate"));
                 }
             }
             if(!TripInfo.getMeet().equals("")){
@@ -83,5 +86,16 @@ public class refreshUserData extends AsyncTask<String, Integer, String> {
             e.printStackTrace();
         }
         return "done";
+    }
+    @Override
+    protected void onPostExecute(String result){
+        if(UserInfo.getCurentDate().before(TripInfo.getStartDate()) || UserInfo.getCurentDate().after(TripInfo.getEndDate())){
+            UserInfo.setShowEveryThing(false);
+        }
+        else{
+            UserInfo.setShowEveryThing(true);
+            Log.e("test", "Show everything");
+        }
+
     }
 }

@@ -15,7 +15,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.dragostrett.tripbud.Background.loginBG;
+import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+
+import java.sql.Date;
+import java.util.Calendar;
 
 public class LogInActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "RemeberMeFile";
@@ -26,6 +30,7 @@ public class LogInActivity extends AppCompatActivity {
     public static String pass="";
     CheckBox rememberMe, loggedIn ;
     public static SharedPreferences pref, prefAutoLogIn;
+    public static Calendar cal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,11 @@ public class LogInActivity extends AppCompatActivity {
         NotificationManager mNotifyMgr =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mNotifyMgr.notify(mNotificationId, mBuilder.build());*/
+        cal= Calendar.getInstance();
+        UserInfo.setCurentDate(new Date(cal.get(Calendar.YEAR)-1900, cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)));
+        TripInfo.setStartDate(new Date(0, 0, 0));
+        TripInfo.setEndDate(new Date(0, 0, 0));
+        UserInfo.setShowEveryThing(false);
     }
 
     public void loginUser(View view) throws InterruptedException {
