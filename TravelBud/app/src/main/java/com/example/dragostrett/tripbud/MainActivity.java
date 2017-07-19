@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             //log out the app
             UserInfo.setAutoLogIn(false);
+            MainActivity.mMap.clear();
             LogInActivity.pref.edit().putString("username", UserInfo.getUsername()).putString("password", UserInfo.getPassword()).putBoolean("autoLogIn", false).commit();
             this.finishAndRemoveTask();
             return true;

@@ -41,7 +41,7 @@ public class RegisterBG extends AsyncTask<String, Integer, String> {
             if(RegisterActivity.admin)
             ps.setString(5, "1");
             else ps.setString(5, "0");
-            ps.setString(6, "0");
+            ps.setString(6, "");
             ps.setString(7, "0");
             ps.executeUpdate();
             UserInfo.setLogedIn(true);
