@@ -47,7 +47,9 @@ public class LogInActivity extends AppCompatActivity {
         if(autoLogIn){
             if(UserInfo.isAutoLogIn()){
                 UserInfo.setLogedIn(false);
+                if(isOnline())
                 new loginBG(this).execute(u, p);
+                else Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG);
             }else{
                 pref.edit().putString("username", UserInfo.getUsername()).putString("password", UserInfo.getPassword()).putBoolean("autoLogIn", false).commit();
             }
