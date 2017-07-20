@@ -27,7 +27,7 @@ public class AddUserBG extends AsyncTask<String, Integer, String> {
             ps= (PreparedStatement) con.prepareStatement("UPDATE table1 SET trip=?, notificare=? WHERE username=?");
             if(join.equals("1"))
                 ps.setString(1, UserInfo.getNotification());
-            else ps.setString(1, "");
+            else ps.setString(1, UserInfo.getTrip());
             ps.setString(2, "");
             ps.setString(3, UserInfo.getUsername());
             ps.executeUpdate();
@@ -39,6 +39,5 @@ public class AddUserBG extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result){
         UserInfo.setNotification("");
-
     }
 }

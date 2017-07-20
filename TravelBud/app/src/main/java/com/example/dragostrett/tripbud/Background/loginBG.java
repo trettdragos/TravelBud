@@ -56,7 +56,7 @@ public class loginBG extends AsyncTask<String, Integer, String> {
                     if(aux.equals("1"))
                         UserInfo.setVisible(true);
                     else UserInfo.setVisible(false);
-                    UserInfo.setNotification(rs.getString("notificare"));
+                    UserInfo.setNotification(rs.getString(""));
                     UserInfo.setLocation(true);
                 }
             }

@@ -14,6 +14,10 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+/**
+ * Created by Trett Dragos
+ * Clasa speciala pentru testat noi functionalitati
+ */
 public class TestingActivity extends AppCompatActivity {
 
     public static final int DIALOG_ID=44;

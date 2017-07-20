@@ -93,7 +93,7 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
                         //Log.e("notif", String.valueOf(TripInfo.getCircleRange())+ " " + String.valueOf(DistanceCalculator.CalculationByDistance(TripInfo.getCircleCenter(), a.get(j))));
                         NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
-                                        .setSmallIcon(R.drawable.xx)
+                                        .setSmallIcon(R.drawable.x)
                                         .setContentTitle("User out of permited range")
                                         .setContentText(name.get(j)+ " is out of range")
                                         .setOngoing(false)

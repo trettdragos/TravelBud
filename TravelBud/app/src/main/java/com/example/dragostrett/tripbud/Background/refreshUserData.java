@@ -1,12 +1,16 @@
 package com.example.dragostrett.tripbud.Background;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.dragostrett.tripbud.BasicInfo.MeetInfo;
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+import com.example.dragostrett.tripbud.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.mysql.jdbc.PreparedStatement;
@@ -21,6 +25,7 @@ import java.sql.ResultSet;
 
 public class refreshUserData extends AsyncTask<String, Integer, String> {
     Context context;
+    public static String notificationCheck="";
     GoogleMap mapP;
     public refreshUserData(Context context, GoogleMap mapP){
         this.context=context;
@@ -49,7 +54,8 @@ public class refreshUserData extends AsyncTask<String, Integer, String> {
                     if(aux.equals("1"))
                         UserInfo.setVisible(true);
                     else UserInfo.setVisible(false);
-                    UserInfo.setNotification(rs.getString("notificare"));
+                    notificationCheck=rs.getString("notificare");
+                    //UserInfo.setNotification(rs.getString("notificare"));
                     UserInfo.setLocation(true);
                 }
             }
@@ -89,6 +95,25 @@ public class refreshUserData extends AsyncTask<String, Integer, String> {
     }
     @Override
     protected void onPostExecute(String result){
+
+        if(!UserInfo.getNotification().equals(notificationCheck)){
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(context)
+                            .setSmallIcon(R.drawable.x)
+                            .setContentTitle("New Join Request")
+                            .setContentText("A request to join"+notificationCheck+" has been sent to you")
+                            .setOngoing(false)
+                            .setAutoCancel(true)
+                            .setPriority(Notification.PRIORITY_HIGH)
+                            .setDefaults(Notification.DEFAULT_ALL);
+
+            NotificationManager mNotifyMgr =
+                    (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+            mNotifyMgr.notify(2, mBuilder.build());
+        }
+        UserInfo.setNotification(notificationCheck);
+        notificationCheck="";
+
         if(UserInfo.getCurentDate().before(TripInfo.getStartDate()) || UserInfo.getCurentDate().after(TripInfo.getEndDate())){
             UserInfo.setShowEveryThing(false);
         }
