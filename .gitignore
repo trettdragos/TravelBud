@@ -46,3 +46,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 DBConnection.java
+TestingActivity.java
+content_testing.xml
+activity_testing.hml
