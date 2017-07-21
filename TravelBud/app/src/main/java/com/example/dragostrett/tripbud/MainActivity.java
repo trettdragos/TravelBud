@@ -242,8 +242,7 @@ public class MainActivity extends AppCompatActivity
             user = mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             if (!TripInfo.getMeet().equals("")) {
                 //add meeting point if existent
-                LatLng sydne = new LatLng(Double.parseDouble(MeetInfo.getLatitudine().toString()), Double.parseDouble(MeetInfo.getLongitudine().toString()));
-                meet = mMap.addMarker(new MarkerOptions().position(sydne).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                meet = mMap.addMarker(new MarkerOptions().position(MeetInfo.getPosition()).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
             }
             if(!UserInfo.getTrip().equals("") && UserInfo.isShowEveryThing())//add other users if the user is in a trip
             new GetAllUsersLocBG(this, mMap).execute();

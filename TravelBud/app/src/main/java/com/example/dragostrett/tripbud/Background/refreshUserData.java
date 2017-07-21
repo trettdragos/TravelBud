@@ -84,8 +84,7 @@ public class refreshUserData extends AsyncTask<String, Integer, String> {
                 ps= (PreparedStatement) con.prepareStatement("SELECT * FROM meet WHERE  moment='"+TripInfo.getMeet()+"'");
                 rs=ps.executeQuery();
                 while(rs.next()){
-                    MeetInfo.setLongitudine(rs.getString("longitudine"));
-                    MeetInfo.setLatitudine(rs.getString("latitudine"));
+                    MeetInfo.setPosition(new LatLng(Double.parseDouble(rs.getString("latitudine")), Double.parseDouble(rs.getString("longitudine"))));
                 }
             }
         } catch (Exception e) {

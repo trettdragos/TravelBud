@@ -24,18 +24,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editText_time"
-        android:visibility="invisible"
-        android:hint="Meeting time"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp" />
-
     <Button
         android:text="Delete Meeting"
         android:layout_width="wrap_content"
@@ -43,9 +31,10 @@
         android:id="@+id/button_delete"
         android:visibility="invisible"
         android:onClick="deleteMeet"
+        android:layout_marginBottom="53dp"
         android:layout_above="@+id/textView5"
         android:layout_alignEnd="@+id/button_place"
-        android:layout_marginBottom="55dp" />
+        android:layout_alignStart="@+id/button_place" />
 
     <Button
         android:text="Chose the place"
@@ -55,8 +44,17 @@
         android:onClick="createMeeting"
         android:visibility="invisible"
         android:layout_above="@+id/button_delete"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewDate"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_above="@+id/button_place"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="28dp" />
+        android:layout_marginBottom="61dp" />
 
     <TextView
         android:text="TextView"
@@ -65,29 +63,30 @@
         android:id="@+id/textView_time"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:visibility="invisible"
-        android:layout_below="@+id/editText_time"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
+        android:layout_above="@+id/textViewDate"
+        android:layout_alignStart="@+id/textViewDate" />
 
-    <EditText
+    <Button
+        android:text="Set Hour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:layout_alignBottom="@+id/textView_time"
-        android:layout_alignStart="@+id/editText_time"
-        android:id="@+id/editText2"
+        android:id="@+id/buttonSetHour"
+        android:onClick="setHour"
         android:visibility="invisible"
-        android:hint="time" />
+        android:layout_above="@+id/button_place"
+        android:layout_alignStart="@+id/button_place"
+        android:layout_alignEnd="@+id/button_place" />
 
-    <EditText
+    <Button
+        android:text="Set Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:layout_above="@+id/editText2"
-        android:layout_alignStart="@+id/editText_time"
-        android:id="@+id/editText4"
+        android:id="@+id/buttonSetDate"
+        android:onClick="setDate"
         android:visibility="invisible"
-        android:hint="date" />
+        android:layout_marginBottom="29dp"
+        android:layout_above="@+id/textViewDate"
+        android:layout_alignStart="@+id/buttonSetHour"
+        android:layout_alignEnd="@+id/buttonSetHour" />
+
 </RelativeLayout>

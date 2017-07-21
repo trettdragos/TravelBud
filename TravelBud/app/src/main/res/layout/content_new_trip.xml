@@ -69,9 +69,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonSecondDatePicker"
-        android:layout_below="@+id/button15"
-        android:layout_alignStart="@+id/button15"
-        android:layout_alignEnd="@+id/button15"
+        android:layout_below="@+id/buttonStartDate"
+        android:layout_alignStart="@+id/buttonStartDate"
+        android:layout_alignEnd="@+id/buttonStartDate"
         android:onClick="openSecondDatePicker"
         android:visibility="invisible" />
 
@@ -81,8 +81,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewStartDate"
         style="@style/Base.TextAppearance.AppCompat.Large"
-        android:layout_alignBaseline="@+id/button15"
-        android:layout_alignBottom="@+id/button15"
+        android:layout_alignBaseline="@+id/buttonStartDate"
+        android:layout_alignBottom="@+id/buttonStartDate"
         android:layout_alignEnd="@+id/editText3" />
 
     <TextView
@@ -100,7 +100,7 @@
         android:text="Set Start Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button15"
+        android:id="@+id/buttonStartDate"
         android:onClick="openDatePicker"
         android:layout_below="@+id/editText3"
         android:layout_toStartOf="@+id/textViewStartDate" />

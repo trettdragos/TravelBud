@@ -1,11 +1,22 @@
 package com.example.dragostrett.tripbud.BasicInfo;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by DragosTrett on 25.05.2017.
  */
 
 public class MeetInfo {
-    public static String moment, longitudine, latitudine;
+    public static String moment;
+    public static LatLng position;
+
+    public static LatLng getPosition() {
+        return position;
+    }
+
+    public static void setPosition(LatLng position) {
+        MeetInfo.position = position;
+    }
 
     public static String getMoment() {
         return moment;
@@ -15,19 +26,4 @@ public class MeetInfo {
         MeetInfo.moment = moment;
     }
 
-    public static String getLongitudine() {
-        return longitudine;
-    }
-
-    public static void setLongitudine(String longitudine) {
-        MeetInfo.longitudine = longitudine;
-    }
-
-    public static String getLatitudine() {
-        return latitudine;
-    }
-
-    public static void setLatitudine(String latitudine) {
-        MeetInfo.latitudine = latitudine;
-    }
 }

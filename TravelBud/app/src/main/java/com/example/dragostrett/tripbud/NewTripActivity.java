@@ -31,6 +31,7 @@ public class NewTripActivity extends AppCompatActivity {
     int curentYear, curentMonth, curentDay;
     public static Calendar cal;
     public TextView endDate, startDate;
+    public Button firstButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class NewTripActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         secondDateButton = (Button)findViewById(R.id.buttonSecondDatePicker);
+        firstButton = (Button)findViewById(R.id.buttonStartDate);
         cal= Calendar.getInstance();
         yearStart=cal.get(Calendar.YEAR);
         monthStart=cal.get(Calendar.MONTH);
@@ -86,11 +88,11 @@ public class NewTripActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener datePickierListenerStart = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            if(year<curentYear){
+            if(year<yearEnd){
                 Toast.makeText(NewTripActivity.this,"Please choose a future date", Toast.LENGTH_SHORT).show();
-            }else if(month<curentMonth-1){
+            }else if(month<monthEnd-1){
                 Toast.makeText(NewTripActivity.this,"Please choose a future date", Toast.LENGTH_SHORT).show();
-            }else if(dayOfMonth<curentDay){
+            }else if(dayOfMonth<dayEnd){
                 Toast.makeText(NewTripActivity.this,"Please choose a future date", Toast.LENGTH_SHORT).show();
             }else {
                 yearStart=year;
@@ -98,6 +100,7 @@ public class NewTripActivity extends AppCompatActivity {
                 dayStart=dayOfMonth;
                 startDate.setText(dayStart+"-"+monthStart+"-"+yearStart);
                 secondDateButton.setVisibility(View.VISIBLE);
+                firstButton.setVisibility(View.INVISIBLE);
                 Toast.makeText(NewTripActivity.this,"Please choose an ending date", Toast.LENGTH_SHORT).show();
             }
         }
@@ -105,18 +108,18 @@ public class NewTripActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener datePickierListenerEnd = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            if(year<curentYear){
+            if(year<yearStart){
                 Toast.makeText(NewTripActivity.this,"Please choose a future date", Toast.LENGTH_SHORT).show();
-            }else if(month<curentMonth-1){
+            }else if(month<monthStart-1){
                 Toast.makeText(NewTripActivity.this,"Please choose a future date", Toast.LENGTH_SHORT).show();
-            }else if(dayOfMonth<curentDay){
+            }else if(dayOfMonth<dayStart){
                 Toast.makeText(NewTripActivity.this,"Please choose a future date", Toast.LENGTH_SHORT).show();
             }else{
                 yearEnd=year;
                 monthEnd=month+1;
                 dayEnd=dayOfMonth;
                 endDate.setText(dayEnd+"-"+monthEnd+ "-"+yearEnd);
-                Toast.makeText(NewTripActivity.this,"Period set", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(NewTripActivity.this,"Period set", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -133,7 +136,7 @@ public class NewTripActivity extends AppCompatActivity {
             Date end=new Date(yearEnd-1900, monthEnd-1, dayEnd);
             TripInfo.setEndDate(end);
             end=new Date(yearStart-1900, monthStart-1, dayStart);
-            Toast.makeText(this, end.toString()+"   " +yearEnd, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, end.toString()+"   " +yearEnd, Toast.LENGTH_SHORT).show();
             TripInfo.setStartDate(end);
             new CreateTrip(this).execute();
             new CreateAnnouncement().execute();
