@@ -19,23 +19,12 @@ import com.example.dragostrett.tripbud.Background.loginBG;
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.example.dragostrett.tripbud.Security.BCrypt;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.services.calendar.CalendarScopes;
 
 import java.sql.Date;
 import java.util.Calendar;
 
 public class LogInActivity extends AppCompatActivity
 {
-
-
-    GoogleAccountCredential mCredential;
-    static final int REQUEST_ACCOUNT_PICKER = 1000;
-    static final int REQUEST_AUTHORIZATION = 1001;
-    static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
-    static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
-    private static final String PREF_ACCOUNT_NAME = "accountName";
-    private static final String[] SCOPES = { CalendarScopes.CALENDAR };
 
     public static final String PREFS_NAME = "RemeberMeFile";
     EditText username;

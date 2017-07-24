@@ -57,8 +57,11 @@
         android:id="@+id/editText_pass2"
         android:layout_below="@+id/editText_pass1"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="11dp"
-        android:layout_margin="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignStart="@+id/editText_email" />
 
     <Button
         android:text="Save Changes"

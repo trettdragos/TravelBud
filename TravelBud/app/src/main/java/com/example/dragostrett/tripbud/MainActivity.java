@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity
             mGoogleApiClient.connect();
         } else
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
-
     }
 
     private static Runnable runnable = new Runnable() {
@@ -191,17 +190,27 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_meting_point) {
             //change activity to meeting point manager
             if (TripInfo.isInATrip()) {
-                Intent intent = new Intent(this, MeetingActivity.class);
-                this.startActivity(intent);
+                if(UserInfo.getCurentDate().before(TripInfo.getStartDate()) || UserInfo.getCurentDate().after(TripInfo.getEndDate())){
+                    Toast.makeText(this, "Trip out of date",
+                            Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intent = new Intent(this, MeetingActivity.class);
+                    this.startActivity(intent);
+                }
             } else Toast.makeText(this, "You are not part of any trip",
                     Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.nav_announcements) {
             //change activity to announcements screen
             if(TripInfo.isInATrip()){
-                //check for trip existance
-                Intent intent = new Intent(this, AnnouncementsActivity.class);
-                this.startActivity(intent);
+                if(UserInfo.getCurentDate().before(TripInfo.getStartDate()) || UserInfo.getCurentDate().after(TripInfo.getEndDate())){
+                    Toast.makeText(this, "Trip out of date",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent intent = new Intent(this, AnnouncementsActivity.class);
+                    this.startActivity(intent);
+                }
             }
             else{
                 Toast.makeText(this, "You are not part of any trip",
@@ -345,8 +354,9 @@ public class MainActivity extends AppCompatActivity
         }
         new refreshUserData(context, mMap).execute();
         if(!UserInfo.getTrip().equals("") && UserInfo.isShowEveryThing()){
-            if(TripInfo.isInATrip())
-            new GetAllUsersLocBG(context, mMap).execute();
+            if(TripInfo.isInATrip()){
+                 new GetAllUsersLocBG(context, mMap).execute();
+            }
         }else {
             LatLng sydney = UserInfo.getUserLoc();
             MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));

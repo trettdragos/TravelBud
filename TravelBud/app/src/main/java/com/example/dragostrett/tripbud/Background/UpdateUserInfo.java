@@ -25,17 +25,19 @@ public class UpdateUserInfo extends AsyncTask<String, Integer, String> {
         String password=params[1];
         String email=params[2];
         String vis=params[3];
+        String trip=params[4];
         Connection con=null;
         PreparedStatement ps=null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
-            ps= (PreparedStatement) con.prepareStatement("UPDATE table1 SET username=?, password=?, email=?, visible=? WHERE username=?");
+            ps= (PreparedStatement) con.prepareStatement("UPDATE table1 SET username=?, password=?, email=?, visible=?, trip=? WHERE username=?");
             ps.setString(1, username);
             ps.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
             ps.setString(3, email);
             ps.setString(4, vis);
-            ps.setString(5, UserInfo.getUsername());
+            ps.setString(5, trip);
+            ps.setString(6, UserInfo.getUsername());
             ps.executeUpdate();
             UserInfo.setUsername(username);
             UserInfo.setPassword(password);

@@ -21,11 +21,11 @@
             <item
                 android:id="@+id/nav_meting_point"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Meting point" />
+                android:title="Meting point"/>
 \            <item
                 android:id="@+id/nav_announcements"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Announcements" />
+                android:title="Announcements"/>
             <item
                 android:id="@+id/nav_chat"
                 android:icon="@drawable/ic_menu_send"

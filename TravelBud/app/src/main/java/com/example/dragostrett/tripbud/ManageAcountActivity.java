@@ -42,8 +42,8 @@ public class ManageAcountActivity extends AppCompatActivity {
             aux="1";
         if(pass1.getText().toString().equals(pass2.getText().toString()) && !username.getText().toString().equals("") && !email.getText().toString().equals("")){
             if(!pass1.getText().toString().equals(""))
-            new UpdateUserInfo(this).execute(username.getText().toString(), pass1.getText().toString(), email.getText().toString(),aux);
-            else new UpdateUserInfo(this).execute(username.getText().toString(), UserInfo.getPassword(), email.getText().toString(), aux);
+            new UpdateUserInfo(this).execute(username.getText().toString(), pass1.getText().toString(), email.getText().toString(),aux, UserInfo.getTrip());
+            else new UpdateUserInfo(this).execute(username.getText().toString(), UserInfo.getPassword(), email.getText().toString(), aux, UserInfo.getTrip());
 
         }
         else{

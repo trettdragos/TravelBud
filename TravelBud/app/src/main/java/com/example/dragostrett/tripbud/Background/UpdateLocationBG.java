@@ -28,7 +28,7 @@ public class UpdateLocationBG extends AsyncTask<String, Integer, String> {
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
             ps= (PreparedStatement) con.prepareStatement("UPDATE table1 SET longitudine=?, latitudine=? WHERE username=?");
             ps.setString(1, String.valueOf(UserInfo.getUserLoc().longitude));
-            ps.setString(2, String.valueOf(UserInfo.getUserLoc().longitude));
+            ps.setString(2, String.valueOf(UserInfo.getUserLoc().latitude));
             ps.setString(3, UserInfo.getUsername());
             ps.executeUpdate();
         } catch (Exception e) {

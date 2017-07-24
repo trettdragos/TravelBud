@@ -18,6 +18,7 @@ import com.example.dragostrett.tripbud.Background.DeleteTripBG;
 import com.example.dragostrett.tripbud.Background.RemoveUserBG;
 import com.example.dragostrett.tripbud.Background.SendJoinNotif;
 import com.example.dragostrett.tripbud.Background.UpdateCircle;
+import com.example.dragostrett.tripbud.Background.UpdateUserInfo;
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.google.android.gms.common.ConnectionResult;
@@ -71,6 +72,7 @@ public class TripActivity extends AppCompatActivity implements GoogleApiClient.O
             time.setVisibility(View.VISIBLE);
             seeAll=(Button)findViewById(R.id.button3);
             seeAll.setVisibility(View.VISIBLE);
+            delete=(Button)findViewById(R.id.button4);
             if(UserInfo.getType().equals("1")){//check is user is admin to give him admin acces
                 Button range=(Button)findViewById(R.id.buttonRange);
                 range.setVisibility(View.VISIBLE);
@@ -80,10 +82,13 @@ public class TripActivity extends AppCompatActivity implements GoogleApiClient.O
                 newUserToTrip.setVisibility(View.VISIBLE);
                 addnew=(Button)findViewById(R.id.button5);
                 addnew.setVisibility(View.VISIBLE);
-                delete=(Button)findViewById(R.id.button4);
                 delete.setVisibility(View.VISIBLE);
                 userName.setVisibility(View.VISIBLE);
                 deleteUser.setVisibility(View.VISIBLE);
+            }
+            else{
+                delete.setText("Exit Trip");
+                delete.setVisibility(View.VISIBLE);
             }
         }else{//display that there is no trip
             TextView erro=(TextView)findViewById(R.id.textView4);
@@ -121,11 +126,20 @@ public class TripActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
     public void deleteTrip(View view){
-        //delete the trip
-        if(!TripInfo.getMeet().equals(""))
-            MainActivity.meet.remove();
-        new DeleteTripBG(this).execute();
-        finish();
+        if(UserInfo.getType().equals("1")){
+            //delete the trip
+            if(!TripInfo.getMeet().equals(""))
+                MainActivity.meet.remove();
+            new DeleteTripBG(this).execute();
+            finish();
+        } else{
+            String aux="0";
+            if(UserInfo.isVisible())
+                aux="1";
+            new UpdateUserInfo(this).execute(UserInfo.getUsername(), UserInfo.getPassword(), UserInfo.getEmail(), aux, "");
+            finishAndRemoveTask();
+        }
+
     }
     public void createTrip(View view){
         //create new trip

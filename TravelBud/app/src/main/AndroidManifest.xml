@@ -63,11 +63,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ChooseLocationActivity"
-            android:label="@string/title_activity_choose_location"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".AnnouncementsActivity"
             android:label="@string/title_activity_announcements"
             android:theme="@style/AppTheme.NoActionBar"
@@ -81,10 +76,6 @@
             android:name=".TestingActivity"
             android:label="@string/title_activity_testing"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".ChooseRangeCenterActivity"
-            android:label="@string/title_activity_choose_range_center"
             android:screenOrientation="portrait"/>
     </application>
 

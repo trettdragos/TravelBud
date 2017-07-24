@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.example.dragostrett.tripbud.BasicInfo.MeetInfo;
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
@@ -112,14 +111,10 @@ public class refreshUserData extends AsyncTask<String, Integer, String> {
         }
         UserInfo.setNotification(notificationCheck);
         notificationCheck="";
-
         if(UserInfo.getCurentDate().before(TripInfo.getStartDate()) || UserInfo.getCurentDate().after(TripInfo.getEndDate())){
             UserInfo.setShowEveryThing(false);
         }
-        else{
+        else
             UserInfo.setShowEveryThing(true);
-            Log.e("test", "Show everything");
-        }
-
     }
 }
