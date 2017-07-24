@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.dragostrett.tripbud.Background.loginBG;
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+import com.example.dragostrett.tripbud.Security.BCrypt;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -152,6 +153,7 @@ public class LogInActivity extends AppCompatActivity
             }
             pass=ps;
             UserInfo.setLogedIn(false);
+            Log.e(pass, BCrypt.hashpw(pass, BCrypt.gensalt()));
             new loginBG(this).execute(un, ps);
         }
         else{

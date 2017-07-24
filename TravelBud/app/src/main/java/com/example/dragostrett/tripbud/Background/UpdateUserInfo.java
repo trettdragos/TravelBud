@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.example.dragostrett.tripbud.MainActivity;
+import com.example.dragostrett.tripbud.Security.BCrypt;
 import com.mysql.jdbc.PreparedStatement;
 
 import java.sql.Connection;
@@ -31,7 +32,7 @@ public class UpdateUserInfo extends AsyncTask<String, Integer, String> {
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
             ps= (PreparedStatement) con.prepareStatement("UPDATE table1 SET username=?, password=?, email=?, visible=? WHERE username=?");
             ps.setString(1, username);
-            ps.setString(2, password);
+            ps.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
             ps.setString(3, email);
             ps.setString(4, vis);
             ps.setString(5, UserInfo.getUsername());

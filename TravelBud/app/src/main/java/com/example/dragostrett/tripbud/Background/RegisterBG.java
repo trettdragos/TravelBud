@@ -10,6 +10,7 @@ import com.example.dragostrett.tripbud.MainActivity;
 import com.example.dragostrett.tripbud.RegisterActivity;
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
+import com.example.dragostrett.tripbud.Security.BCrypt;
 import com.mysql.jdbc.PreparedStatement;
 
 import java.sql.Connection;
@@ -35,7 +36,7 @@ public class RegisterBG extends AsyncTask<String, Integer, String> {
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
             ps= (PreparedStatement) con.prepareStatement("INSERT INTO table1 (username, password, email, trip, type, longitudine, latitudine, notificare, visible) VALUES (?,?,?, ?, ?, '0', '0', ?, ?)");
             ps.setString(1, username);
-            ps.setString(2, password);
+            ps.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
             ps.setString(3, email);
             ps.setString(4, "");
             if(RegisterActivity.admin)

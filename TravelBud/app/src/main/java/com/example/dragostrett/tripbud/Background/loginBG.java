@@ -13,6 +13,7 @@ import com.example.dragostrett.tripbud.BasicInfo.MeetInfo;
 import com.example.dragostrett.tripbud.BasicInfo.TripInfo;
 import com.example.dragostrett.tripbud.BasicInfo.UserInfo;
 import com.example.dragostrett.tripbud.MainActivity;
+import com.example.dragostrett.tripbud.Security.BCrypt;
 import com.google.android.gms.maps.model.LatLng;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -35,29 +36,34 @@ public class loginBG extends AsyncTask<String, Integer, String> {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con= (Connection) DriverManager.getConnection(DBConnection.getUrl(), DBConnection.getUser(), DBConnection.getPassword());
-            ps= (PreparedStatement) con.prepareStatement("SELECT * FROM table1 WHERE username=? AND password=?");
+            ps= (PreparedStatement) con.prepareStatement("SELECT * FROM table1 WHERE username=?");
             ps.setString(1, user);
-            ps.setString(2, pass);
+            //ps.setString(2, pass);
             rs=ps.executeQuery();
             if(!rs.isBeforeFirst()){
                 UserInfo.setLogedIn(false);
             }
             else{
-                UserInfo.setLogedIn(true);
                 while(rs.next()){
-                    UserInfo.setUsername(rs.getString("username"));
-                    UserInfo.setEmail(rs.getString("email"));
-                    UserInfo.setPassword(rs.getString("password"));
-                    UserInfo.setUserLoc(new LatLng(Double.parseDouble(rs.getString("latitudine")), Double.parseDouble(rs.getString("longitudine"))));
-                    UserInfo.setId(rs.getString("id"));
-                    UserInfo.setTrip(rs.getString("trip"));
-                    UserInfo.setType(rs.getString("type"));
-                    String aux=rs.getString("visible");
-                    if(aux.equals("1"))
-                        UserInfo.setVisible(true);
-                    else UserInfo.setVisible(false);
-                    UserInfo.setNotification(rs.getString(""));
-                    UserInfo.setLocation(true);
+                    if(!BCrypt.checkpw(pass, rs.getString("password"))){
+                        UserInfo.setLogedIn(false);
+                        return null;
+                    }else{
+                        UserInfo.setLogedIn(true);
+                        UserInfo.setUsername(rs.getString("username"));
+                        UserInfo.setEmail(rs.getString("email"));
+                        UserInfo.setPassword(pass);
+                        UserInfo.setUserLoc(new LatLng(Double.parseDouble(rs.getString("latitudine")), Double.parseDouble(rs.getString("longitudine"))));
+                        UserInfo.setId(rs.getString("id"));
+                        UserInfo.setTrip(rs.getString("trip"));
+                        UserInfo.setType(rs.getString("type"));
+                        String aux=rs.getString("visible");
+                        if(aux.equals("1"))
+                            UserInfo.setVisible(true);
+                        else UserInfo.setVisible(false);
+                        UserInfo.setNotification(rs.getString(""));
+                        UserInfo.setLocation(true);
+                    }
                 }
             }
             if(UserInfo.getTrip().equals("")){
