@@ -160,6 +160,8 @@ public class TripActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
     public void editRange(View view){
+        newUserToTrip.setText("");
+        userName.setText("");
         //Intent intent = new Intent(this, ChooseRangeCenterActivity.class);
         //this.startActivity(intent);
         GoogleApiClient mGoogleApiClient = new GoogleApiClient

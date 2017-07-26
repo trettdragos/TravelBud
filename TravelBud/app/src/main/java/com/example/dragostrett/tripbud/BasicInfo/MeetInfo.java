@@ -4,6 +4,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by DragosTrett on 25.05.2017.
+ * class for local saving the meeting point infoemation
  */
 
 public class MeetInfo {

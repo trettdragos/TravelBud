@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 
 /**
  * Created by DragosTrett on 25.05.2017.
+ * deletets the meeting of the coresponding trip in db
  */
 
 public class DeleteMeet extends AsyncTask<String, Integer, String> {

@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 
 /**
  * Created by DragosTrett on 25.05.2017.
+ * called when user has changed something to his account
  */
 
 public class UpdateUserInfo extends AsyncTask<String, Integer, String> {

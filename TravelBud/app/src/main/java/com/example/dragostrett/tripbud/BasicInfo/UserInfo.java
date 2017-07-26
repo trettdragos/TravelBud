@@ -6,6 +6,7 @@ import java.sql.Date;
 
 /**
  * Created by DragosTrett on 23.05.2017.
+ * class for local saving the user information
  */
 
 public class UserInfo {

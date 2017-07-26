@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 
 /**
  * Created by DragosTrett on 08.07.2017.
+ * class for refreshing only user related data with the db
  */
 
 public class refreshUserData extends AsyncTask<String, Integer, String> {

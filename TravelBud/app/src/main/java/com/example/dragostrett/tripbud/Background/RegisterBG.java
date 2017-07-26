@@ -18,6 +18,7 @@ import java.sql.DriverManager;
 
 /**
  * Created by DragosTrett on 25.05.2017.
+ * for registering new user whit JBCrypt
  */
 
 public class RegisterBG extends AsyncTask<String, Integer, String> {

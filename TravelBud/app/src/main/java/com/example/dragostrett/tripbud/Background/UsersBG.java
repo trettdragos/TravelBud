@@ -17,6 +17,7 @@ import java.util.LinkedList;
 
 /**
  * Created by DragosTrett on 25.05.2017.
+ * get all users to create a list, viewable by anyone in the trip
  */
 
 public class UsersBG extends AsyncTask<String, Integer, String> {

@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 
 /**
  * Created by DragosTrett on 25.05.2017.
+ * delete one trip
  */
 
 public class DeleteTripBG extends AsyncTask<String, Integer, String> {

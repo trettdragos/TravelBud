@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 
 /**
  * Created by DragosTrett on 18.06.2017.
+ * sends join request to one of the users in db
  */
 
 public class SendJoinNotif extends AsyncTask<String, Integer, String> {

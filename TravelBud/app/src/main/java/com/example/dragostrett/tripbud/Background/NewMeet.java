@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 
 /**
  * Created by DragosTrett on 25.05.2017.
+ * creates new meeting point in the db
  */
 
 public class NewMeet extends AsyncTask<String, Integer, String> {

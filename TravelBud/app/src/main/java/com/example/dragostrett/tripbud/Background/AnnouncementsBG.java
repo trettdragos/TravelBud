@@ -22,8 +22,8 @@ import java.util.LinkedList;
 public class AnnouncementsBG extends AsyncTask<String, Integer, String> {
     Context context;
     View liniar;
-    LinkedList<String> b = new LinkedList<>();
-    LinkedList<String> a = new LinkedList<>();
+    LinkedList<String> b = new LinkedList<>();//time of announcements
+    LinkedList<String> a = new LinkedList<>();//list of announcements
     public AnnouncementsBG(Context context, View show){
         this.context=context;this.liniar = show;
     }
@@ -40,9 +40,8 @@ public class AnnouncementsBG extends AsyncTask<String, Integer, String> {
             rs.next();
             do{
                 a.push(rs.getString("announcement"));
-                String[] time= rs.getString("time").split(" ");
-                String[] aux =time[3].split(":");
-                b.push(aux[0]+":"+aux[2]);
+                String time= rs.getString("time");
+                b.push(time);
             }while (rs.next());
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,7 +50,7 @@ public class AnnouncementsBG extends AsyncTask<String, Integer, String> {
     }
     @Override
     protected void onPostExecute(String result){
-        for(int j=0; j<a.size(); j++){
+        for(int j=0; j<a.size(); j++){//place one text view for every anouncement
             TextView valueTV = new TextView(context);
             valueTV.setText(a.get(j)+";"+b.get(j));
             valueTV.setLayoutParams(new ViewGroup.LayoutParams(

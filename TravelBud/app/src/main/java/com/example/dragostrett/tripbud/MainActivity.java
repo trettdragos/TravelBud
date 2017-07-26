@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -61,11 +62,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //ending previous activity
-        //LogInActivity.cancelNotification();
-        context=this;
-        cont=this;
+        context = this;
+        cont = this;
         if (UserInfo.isLogedIn()) {
-            //LogInActivity.fa.finish();
             if (!k)
                 RegisterActivity.fa.finish();
         }
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         toolbar.setAlpha(opacity);
         setSupportActionBar(toolbar);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.map);//add map
         mapFragment.getMapAsync(this);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -94,12 +93,22 @@ public class MainActivity extends AppCompatActivity
             mGoogleApiClient.connect();
         } else
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
+
+        LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        //start location listener
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100,
+                1, mLocationListener);
+
     }
 
     private static Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            Log.e("refresh", "refreshed again");
+            //Log.e("refresh", "refreshed again");
             if(started) {
                 refresh();
                 start();
@@ -119,6 +128,7 @@ public class MainActivity extends AppCompatActivity
     }
     public void onDestroy() {
         super.onDestroy();
+        //stop the runnable when app is closed for batery reasons
         LogInActivity.cancelNotification();
         stop();
     }
@@ -126,11 +136,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        //starts the runnable once nedded
         start();
     }
 
     @Override
     protected void onPause() {
+        //stop the runnable for baterry save
         super.onPause();
         stop();
     }
@@ -216,13 +228,11 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(this, "You are not part of any trip",
                         Toast.LENGTH_SHORT).show();
             }
-        }else if (id == R.id.nav_notifications) {
+        }else if (id == R.id.nav_notifications) {//open notifications tab
             Intent intent = new Intent(this, NotificationActivity.class);
             this.startActivity(intent);
         }
-        else if (id == R.id.nav_chat) {
-            Toast.makeText(this, "Open chat",
-                    Toast.LENGTH_SHORT).show();
+        else if (id == R.id.nav_chat) {//this is hidden and only for dev testing
             Intent intent = new Intent(this, TestingActivity.class);
             this.startActivity(intent);
         }
@@ -239,24 +249,22 @@ public class MainActivity extends AppCompatActivity
         user= mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).visible(false));
         if (UserInfo.isLocation()) {
             //if user has gave location permision show him on the map
-            LatLng sydney =UserInfo.getUserLoc();
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(UserInfo.getUserLoc()));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(UserInfo.getUserLoc(), 13));
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(UserInfo.getUserLoc())// Sets the center of the map to location user
                     .zoom(12)
                     .build();
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));//move camera on current user
-            sydney =UserInfo.getUserLoc();
-            user = mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+            user = mMap.addMarker(new MarkerOptions().position(UserInfo.getUserLoc()).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             if (!TripInfo.getMeet().equals("")) {
                 //add meeting point if existent
                 meet = mMap.addMarker(new MarkerOptions().position(MeetInfo.getPosition()).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
             }
             if(!UserInfo.getTrip().equals("") && UserInfo.isShowEveryThing())//add other users if the user is in a trip
-            new GetAllUsersLocBG(this, mMap).execute();
+            new GetAllUsersLocBG(this, mMap).execute();//refresh all data for the map and others
         }
-        start();
+        start();//start the new runnable to make connection real time
     }
 
 
@@ -311,7 +319,6 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -339,27 +346,47 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Toast.makeText(this, "Location Failure",
+        Toast.makeText(this, "Location Failure",//no location activated
                 Toast.LENGTH_SHORT).show();
     }
 
     public static void refresh(){
-        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if(mLastLocation!=null){
-            UserInfo.setUserLoc(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
-            new UpdateLocationBG(context).execute();
-        }
-        new refreshUserData(context, mMap).execute();
-        if(!UserInfo.getTrip().equals("") && UserInfo.isShowEveryThing()){
+        new refreshUserData(context, mMap).execute();//refresh user important data
+        if(!UserInfo.getTrip().equals("") && UserInfo.isShowEveryThing()){//double check for showing important staff on the map
             if(TripInfo.isInATrip()){
-                 new GetAllUsersLocBG(context, mMap).execute();
+                 new GetAllUsersLocBG(context, mMap).execute();//if so, show everything
             }
-        }else {
-            LatLng sydney = UserInfo.getUserLoc();
-            MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        }else {//shows only user location
+            MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(UserInfo.getUserLoc()).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         }
     }
+
+    private final android.location.LocationListener mLocationListener = new android.location.LocationListener() {
+        @Override
+        public void onLocationChanged(final Location location) {
+            UserInfo.setUserLoc(new LatLng(location.getLatitude(), location.getLongitude()));//updates local save
+            mLastLocation=location;
+            new UpdateLocationBG(context).execute();//updates location to the server
+            user.remove();//places the user to the new location
+            user = MainActivity.mMap.addMarker(new MarkerOptions().position(UserInfo.getUserLoc()).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+            Log.e("location", "location changed "+ location);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+
 }
+

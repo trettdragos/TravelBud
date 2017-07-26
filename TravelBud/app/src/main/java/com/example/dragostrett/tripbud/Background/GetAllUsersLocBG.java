@@ -28,16 +28,17 @@ import java.util.LinkedList;
 
 /**
  * Created by DragosTrett on 27.05.2017.
+ * get all others users info and places everything on the map
  */
 
 public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
     Context context;
     GoogleMap map;
-    LinkedList<LatLng> a = new LinkedList<>();
-    LinkedList<String> name = new LinkedList<>();
-    LinkedList<Boolean> visibility = new LinkedList<>();
+    LinkedList<LatLng> a = new LinkedList<>();//list for all users loc
+    LinkedList<String> name = new LinkedList<>();//list for names
+    LinkedList<Boolean> visibility = new LinkedList<>();//list to check if user should be shown on the map
     public GetAllUsersLocBG(Context context, GoogleMap show){
-        this.context=context;this.map = show;
+        this.context=context;this.map = show;//get context
     }
     @Override
     protected String doInBackground(String... params) {
@@ -68,21 +69,21 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String result){
-        MainActivity.mMap.clear();
-        if(!TripInfo.getCircleRange().equals(0)){
+        MainActivity.mMap.clear();//clear map
+        if(!TripInfo.getCircleRange().equals(0)){//add range circle
             MainActivity.circle = MainActivity.mMap.addCircle(new CircleOptions()
                     .center(TripInfo.getCircleCenter())
                     .radius(TripInfo.getCircleRange())
                     .strokeColor(Color.RED)
                     .fillColor(0x00000000));
         }
-        if (!TripInfo.getMeet().equals("")) {
+        if (!TripInfo.getMeet().equals("")) {//add meeting point
             MainActivity.meet = MainActivity.mMap.addMarker(new MarkerOptions().position(MeetInfo.getPosition()).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
-        LatLng sydney = UserInfo.getUserLoc();
-        MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(sydney).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        //add user
+        MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(UserInfo.getUserLoc()).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         boolean everyoneInTheCircle=true;
-        for(int j=0; j<a.size(); j++){
+        for(int j=0; j<a.size(); j++){//put all users on the map an if the user is admi, notifi for users out of the range
             if(!name.get(j).equals(UserInfo.getUsername()) && !name.get(j).equals("") && (visibility.get(j)|| UserInfo.getType().equals("1")))
             MainActivity.mMap.addMarker(new MarkerOptions().position(a.get(j)).title(name.get(j)));
             if(UserInfo.getType().equals("1")){
@@ -106,6 +107,6 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
                     }
                 }
             }
-        }if(everyoneInTheCircle) LogInActivity.cancelNotification();
+        }if(everyoneInTheCircle) LogInActivity.cancelNotification();//cancel ntif once everyne is back in the circle
     }
 }

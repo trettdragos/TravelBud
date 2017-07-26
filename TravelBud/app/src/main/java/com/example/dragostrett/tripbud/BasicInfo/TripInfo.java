@@ -6,6 +6,7 @@ import java.sql.Date;
 
 /**
  * Created by DragosTrett on 24.05.2017.
+ * class for local saving the trip information
  */
 
 public class TripInfo {

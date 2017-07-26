@@ -2,6 +2,7 @@ package com.example.dragostrett.tripbud.Background;
 
 /**
  * Created by DragosTrett on 23.05.2017.
+ * log in  class, used sometimes to refresh
  */
 
 import android.content.Context;

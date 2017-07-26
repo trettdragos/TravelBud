@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 
 /**
  * Created by DragosTrett on 27.05.2017.
+ * removes user from trip
  */
 
 public class RemoveUserBG extends AsyncTask<String, Integer, String> {

@@ -15,6 +15,7 @@ import java.sql.DriverManager;
 
 /**
  * Created by DragosTrett on 12.07.2017.
+ * updates/deletes range circle
  */
 
 public class UpdateCircle extends AsyncTask<String, Integer, String> {

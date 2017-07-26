@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 
 /**
  * Created by DragosTrett on 02.06.2017.
+ * creates table for anouncements
  */
 
 public class CreateAnnouncement extends AsyncTask<String, Integer, String> {
