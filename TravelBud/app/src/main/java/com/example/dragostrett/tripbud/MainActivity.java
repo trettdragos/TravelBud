@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             //log out the app
+            mMap.clear();
             UserInfo.setAutoLogIn(false);
             MainActivity.mMap.clear();
             LogInActivity.pref.edit().putString("username", UserInfo.getUsername()).putString("password", UserInfo.getPassword()).putBoolean("autoLogIn", false).commit();
@@ -176,6 +177,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.action_refresh) {
             //exit
             stop();
+            mMap.clear();
             LogInActivity.pref.edit().putString("username", UserInfo.getUsername()).putString("password", UserInfo.getPassword()).putBoolean("autoLogIn", true).commit();
             LogInActivity.fa.finish();
             this.finishAndRemoveTask();
