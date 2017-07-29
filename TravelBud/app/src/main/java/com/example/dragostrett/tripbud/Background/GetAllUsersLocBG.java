@@ -81,7 +81,7 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
             MainActivity.meet = MainActivity.mMap.addMarker(new MarkerOptions().position(MeetInfo.getPosition()).title(TripInfo.getMeet()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
         //add user
-        MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(UserInfo.getUserLoc()).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(new LatLng(MainActivity.mLastLocation.getLatitude(), MainActivity.mLastLocation.getLongitude())).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         boolean everyoneInTheCircle=true;
         for(int j=0; j<a.size(); j++){//put all users on the map an if the user is admi, notifi for users out of the range
             if(!name.get(j).equals(UserInfo.getUsername()) && !name.get(j).equals("") && (visibility.get(j)|| UserInfo.getType().equals("1")))
