@@ -1,3 +1,3 @@
 # TripBud
-Download apk from travelbud.ml
+Download apk from https://github.com/trettdragos/TravelBud/releases
   
