@@ -358,8 +358,6 @@ public class MainActivity extends AppCompatActivity
             if(TripInfo.isInATrip()){
                  new GetAllUsersLocBG(context, mMap).execute();//if so, show everything
             }
-        }else {//shows only user location
-            MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(UserInfo.getUserLoc()).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         }
     }
 

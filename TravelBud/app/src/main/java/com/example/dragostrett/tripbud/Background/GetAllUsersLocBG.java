@@ -69,6 +69,7 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String result){
+        MainActivity.user.remove();
         MainActivity.mMap.clear();//clear map
         if(!TripInfo.getCircleRange().equals(0)){//add range circle
             MainActivity.circle = MainActivity.mMap.addCircle(new CircleOptions()
@@ -83,7 +84,7 @@ public class GetAllUsersLocBG extends AsyncTask<String, Integer, String> {
         //add user
         MainActivity.user = MainActivity.mMap.addMarker(new MarkerOptions().position(new LatLng(MainActivity.mLastLocation.getLatitude(), MainActivity.mLastLocation.getLongitude())).title(UserInfo.getUsername()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         boolean everyoneInTheCircle=true;
-        for(int j=0; j<a.size(); j++){//put all users on the map an if the user is admi, notifi for users out of the range
+        for(int j=0; j<a.size(); j++){//put all users on the map and if the user is admin, notifi for users out of the range
             if(!name.get(j).equals(UserInfo.getUsername()) && !name.get(j).equals("") && (visibility.get(j)|| UserInfo.getType().equals("1")))
             MainActivity.mMap.addMarker(new MarkerOptions().position(a.get(j)).title(name.get(j)));
             if(UserInfo.getType().equals("1")){
